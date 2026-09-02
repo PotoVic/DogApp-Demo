@@ -152,7 +152,7 @@
   flex: 1 1 0;
   min-width: 0;
   min-height: 3.5rem;
-  padding: 0.375rem 0.5rem;
+  padding: 1rem 2rem;
 }
 
 .app-mobile-navigation .app-navigation__icon {
