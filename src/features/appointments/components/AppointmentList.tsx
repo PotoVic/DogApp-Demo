@@ -151,7 +151,7 @@ export function AppointmentList({
               )}
 
               <p className="appointment-card__price">
-                {appointment.price} zł
+                {appointment.price} kr
               </p>
 
               <div className="appointment-card__actions">

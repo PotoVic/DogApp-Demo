@@ -94,9 +94,9 @@ const formatDate = (date: string) => {
   return `${day}.${month}.${year}`;
 };
 
-// Adds the Polish złoty suffix to a formatted price.
+// Adds the Swedish krona suffix to a formatted price.
 const formatPrice = (price: number) =>
-  `${formatEarnings(price)} zł`;
+  `${formatEarnings(price)} kr`;
 
 // Maps appointment status to the Polish label used in the PDF.
 const getStatusLabel = (status: Appointment["status"]) => {
@@ -260,7 +260,7 @@ export async function generateMonthlyReport({
   pdf.setTextColor(218, 91, 127);
   pdf.setFont("DejaVuSans", "bold");
   pdf.setFontSize(11);
-  pdf.text(`${formatEarnings(monthlyEarnings)} zł`, 65, summaryY + 7);
+  pdf.text(`${formatEarnings(monthlyEarnings)} kr`, 65, summaryY + 7);
 
   pdf.setTextColor(0, 0, 0);
 

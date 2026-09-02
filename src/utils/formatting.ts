@@ -2,11 +2,11 @@
  * Shared display-formatting helpers.
  */
 
-// Formats a number as Polish złoty currency for the UI.
+// Formats a number as Swedish krona for the UI.
 export function formatCurrency(value: number): string {
-  return new Intl.NumberFormat("pl-PL", {
+  return new Intl.NumberFormat("sv-SE", {
     style: "currency",
-    currency: "PLN",
+    currency: "SEK",
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   }).format(value);

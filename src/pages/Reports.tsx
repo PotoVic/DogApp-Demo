@@ -10,6 +10,7 @@ import {
   getMonthlyAppointments,
   getMonthlyEarnings,
 } from "../utils/appointmentCalculations";
+import { formatCurrency } from "../utils/formatting";
 
 // Returns the current calendar month as the initial report selection.
 const getCurrentMonth = () => {
@@ -35,13 +36,6 @@ const MONTH_NAMES = [
   "Listopad",
   "Grudzień",
 ];
-
-// Formats a numeric price for display in the report UI.
-const formatPrice = (price: number) =>
-  new Intl.NumberFormat("pl-PL", {
-    style: "currency",
-    currency: "PLN",
-  }).format(price);
 
 // Builds the YYYY-MM key used to select appointments for a month.
 const getMonthKey = (year: number, month: number) =>
@@ -228,7 +222,7 @@ export default function Reports() {
                               monthlyAppointments.length <= 4
                             ? "wizyty"
                             : "wizyt"
-                    } · ${formatPrice(monthlyEarnings)}`}
+                    } · ${formatCurrency(monthlyEarnings)}`}
               </p>
             </div>
           </div>
