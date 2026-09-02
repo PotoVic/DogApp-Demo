@@ -31,11 +31,20 @@ function normalizeAppointmentTime(time?: string): string {
   return time.slice(0, 5);
 }
 
-// Formats a Polish phone number for display and editing.
-function formatPolishPhoneNumber(value?: string | null): string {
-  const digits = value?.replace(/\D/g, "").slice(0, 9) ?? "";
+// Keeps phone numbers flexible so numbers from any country can be entered.
+// The value is not forced into a country-specific format.
+function formatPhoneNumber(value?: string | null): string {
+  if (!value) {
+    return "";
+  }
 
-  return digits.replace(/(\d{3})(?=\d)/g, "$1 ").trim();
+  const trimmedValue = value.trim();
+  const hasLeadingPlus = trimmedValue.startsWith("+");
+
+  const cleanedValue = trimmedValue.replace(/[^\d\s().-]/g, "");
+  const normalizedValue = cleanedValue.replace(/\s+/g, " ").trim();
+
+  return hasLeadingPlus ? `+${normalizedValue}` : normalizedValue;
 }
 
 interface AppointmentFormProps {
@@ -122,7 +131,7 @@ export function AppointmentForm({
       ...current,
       dog_name: dog.name,
       breed: dog.breed ?? "",
-      phone_number: formatPolishPhoneNumber(dog.phone_number),
+      phone_number: formatPhoneNumber(dog.phone_number),
     }));
   };
 
@@ -275,7 +284,7 @@ export function AppointmentForm({
 
                   {dog.phone_number && (
                     <span className="appointment-form__saved-dog-phone">
-                      {formatPolishPhoneNumber(dog.phone_number)}
+                      {formatPhoneNumber(dog.phone_number)}
                     </span>
                   )}
                 </button>
@@ -331,14 +340,14 @@ export function AppointmentForm({
             onChange={(event) => {
               setFormData({
                 ...formData,
-                phone_number: formatPolishPhoneNumber(event.target.value),
+                phone_number: formatPhoneNumber(event.target.value),
               });
             }}
             disabled={isSubmitting}
             autoComplete="tel"
-            inputMode="numeric"
-            maxLength={11}
-            placeholder="np. 323 232 232"
+            inputMode="tel"
+            maxLength={30}
+            placeholder="np. +48 532 483 896"
           />
         </div>
 

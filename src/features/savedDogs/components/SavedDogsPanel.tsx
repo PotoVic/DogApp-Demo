@@ -15,11 +15,17 @@ import type { SavedDog } from "../../../types/savedDog";
 import "./savedDogs.css";
 import closeIcon from "../../../assets/close-icon.svg";
 
-// Formats a Polish phone number while the user types it.
-function formatPolishPhoneNumber(value?: string | null): string {
-  const digits = value?.replace(/\D/g, "").slice(0, 9) ?? "";
+// Formats a phone number while the user types it.
+// Supports international numbers and preserves country codes.
+function formatPhoneNumber(value?: string | null): string {
+  if (!value) {
+    return "";
+  }
 
-  return digits.replace(/(\d{3})(?=\d)/g, "$1 ").trim();
+  return value
+    .replace(/[^\d+\s().-]/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
 interface SavedDogFormState {
@@ -74,7 +80,7 @@ export function SavedDogsPanel() {
     setFormData({
       name: dog.name,
       breed: dog.breed ?? "",
-      phone_number: formatPolishPhoneNumber(dog.phone_number),
+      phone_number: formatPhoneNumber(dog.phone_number),
     });
     setFormError(null);
     setShowForm(true);
@@ -116,7 +122,11 @@ export function SavedDogsPanel() {
   const handleModalKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
     if (event.key === "Escape") {
       event.preventDefault();
-      if (!isSubmitting) closeForm();
+
+      if (!isSubmitting) {
+        closeForm();
+      }
+
       return;
     }
 
@@ -283,7 +293,9 @@ export function SavedDogsPanel() {
           role="dialog"
           aria-modal="true"
           aria-labelledby="saved-dog-modal-title"
-          aria-describedby={formError ? "saved-dog-modal-error" : undefined}
+          aria-describedby={
+            formError ? "saved-dog-modal-error" : undefined
+          }
           onKeyDown={handleModalKeyDown}
           onMouseDown={handleBackdropMouseDown}
         >
@@ -293,7 +305,11 @@ export function SavedDogsPanel() {
                 <p className="saved-dog-modal__eyebrow">
                   {editingDogId ? "Zarządzanie psem" : "Nowy pies"}
                 </p>
-                <h2 className="saved-dog-modal__title" id="saved-dog-modal-title">
+
+                <h2
+                  className="saved-dog-modal__title"
+                  id="saved-dog-modal-title"
+                >
                   {editingDogId ? "Edytuj psa" : "Dodaj psa"}
                 </h2>
               </div>
@@ -314,6 +330,7 @@ export function SavedDogsPanel() {
               <div className="saved-dog-form__fields">
                 <div className="saved-dog-form__field">
                   <label htmlFor="saved-dog-name">Nazwa psa *</label>
+
                   <input
                     id="saved-dog-name"
                     type="text"
@@ -332,6 +349,7 @@ export function SavedDogsPanel() {
 
                 <div className="saved-dog-form__field">
                   <label htmlFor="saved-dog-breed">Rasa</label>
+
                   <input
                     id="saved-dog-breed"
                     type="text"
@@ -349,6 +367,7 @@ export function SavedDogsPanel() {
 
                 <div className="saved-dog-form__field">
                   <label htmlFor="saved-dog-phone">Telefon</label>
+
                   <input
                     id="saved-dog-phone"
                     type="tel"
@@ -356,16 +375,16 @@ export function SavedDogsPanel() {
                     onChange={(event) =>
                       setFormData({
                         ...formData,
-                        phone_number: formatPolishPhoneNumber(
+                        phone_number: formatPhoneNumber(
                           event.target.value,
                         ),
                       })
                     }
                     disabled={isSubmitting}
                     autoComplete="tel"
-                    inputMode="numeric"
-                    maxLength={11}
-                    placeholder="np. 323 232 232"
+                    inputMode="tel"
+                    maxLength={30}
+                    placeholder="+48 532 483 896"
                   />
                 </div>
               </div>
@@ -410,10 +429,12 @@ export function SavedDogsPanel() {
       {!showForm && savedDogs.length === 0 && (
         <div className="saved-dogs-panel__empty">
           <h3>Nie masz jeszcze zapisanych psów</h3>
+
           <p>
             Dodaj pierwszego psa. Przy kolejnych wizytach jego dane będą
             dostępne jako szybka podpowiedź.
           </p>
+
           <button
             className="button-secondary"
             type="button"
@@ -431,12 +452,13 @@ export function SavedDogsPanel() {
               <div className="saved-dog-card__main">
                 <div className="saved-dog-card__identity">
                   <h3>{dog.name}</h3>
+
                   {dog.breed && <p>{dog.breed}</p>}
                 </div>
 
                 {dog.phone_number && (
                   <p className="saved-dog-card__phone">
-                    {formatPolishPhoneNumber(dog.phone_number)}
+                    {formatPhoneNumber(dog.phone_number)}
                   </p>
                 )}
               </div>
