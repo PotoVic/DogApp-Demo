@@ -1,0 +1,80 @@
+/*
+ * Shared layout and visual styles for workspace pages.
+ */
+
+.workspace-page {
+  width: 100%;
+  max-width: var(--content-max-width);
+  min-width: 0;
+  margin: 0 auto;
+  padding: var(--spacing-md);
+}
+
+.workspace-page__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
+}
+
+.workspace-page__eyebrow {
+  margin: 0 0 var(--spacing-xs);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+}
+
+.workspace-page__header h1 {
+  margin: 0;
+}
+
+.workspace-page__description {
+  max-width: 42rem;
+  margin-top: var(--spacing-sm);
+  color: var(--color-text-secondary);
+}
+
+.workspace-page--calendar .calendar {
+  margin-top: 0;
+  padding: var(--spacing-lg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+}
+
+@media (min-width: 48rem) {
+.workspace-page {
+
+  padding: var(--spacing-lg);
+}
+
+
+}
+@media (max-width: 32rem) {
+
+  .workspace-page__header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .workspace-page__header .button-primary {
+    width: 100%;
+  }
+
+  .workspace-page--calendar .calendar {
+    padding: var(--spacing-md);
+  }
+
+}
+
+
+@media only screen and (min-width: 64rem) {
+
+.workspace-page {
+
+  padding: var(--spacing-xl);
+}
+
+}

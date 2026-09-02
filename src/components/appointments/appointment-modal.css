@@ -1,0 +1,185 @@
+/*
+ * Appointment modal overlay, dialog, and responsive styles.
+ */
+
+/* ========================================
+   Appointment modal
+   ======================================== */
+
+.appointment-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 100dvh;
+  padding: 1rem;
+  background: var(--color-overlay);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  overflow: hidden;
+  animation: appointment-modal-fade-in 150ms ease-out;
+}
+
+.appointment-modal__content {
+  display: flex;
+  flex-direction: column;
+  width: min(100%, 46rem);
+  max-width: 100%;
+  max-height: calc(100dvh - 2rem);
+  min-width: 0;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  padding: var(--spacing-xl);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-modal);
+  animation: appointment-modal-slide-up 180ms ease-out;
+}
+
+.appointment-modal__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--spacing-lg);
+  flex: 0 0 auto;
+  margin-bottom: var(--spacing-lg);
+}
+
+.appointment-modal__eyebrow {
+  margin: 0 0 var(--spacing-xs);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+}
+
+.appointment-modal__title {
+  margin: 0;
+  color: var(--color-text);
+  font-family: var(--font-heading);
+  font-size: var(--font-size-2xl);
+  line-height: var(--line-height-tight);
+}
+
+.appointment-modal__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: var(--control-height);
+  min-width: var(--control-height);
+  height: var(--control-height);
+  min-height: var(--control-height);
+  padding: 0;
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+.appointment-modal__close:hover:not(:disabled) {
+  border-color: var(--color-primary);
+  background: var(--color-primary-soft);
+  color: var(--color-primary-hover);
+}
+
+.appointment-modal__close:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+.appointment-modal__close svg {
+  width: 1.15rem;
+  height: 1.15rem;
+}
+
+.appointment-modal__content > .appointment-form__error {
+  flex: 0 0 auto;
+  margin-bottom: var(--spacing-md);
+}
+
+.appointment-modal__content > .appointment-form {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 0.125rem 0.125rem 0.25rem 0;
+}
+
+/* Keep action buttons compact and predictable inside the modal. */
+.appointment-modal .appointment-form__actions {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-xs);
+}
+
+.appointment-modal .appointment-form__button {
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: var(--control-height-large);
+}
+
+@keyframes appointment-modal-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes appointment-modal-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(0.75rem) scale(0.99);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (max-width: 47.99rem) {
+  .appointment-modal {
+    padding: 0.5rem;
+  }
+
+  .appointment-modal__content {
+    width: 100%;
+    max-width: 52rem;
+    max-height: calc(100dvh - 1rem);
+    padding: var(--spacing-lg);
+    border-radius: var(--border-radius);
+  }
+
+  .appointment-modal__header {
+    margin-bottom: var(--spacing-md);
+  }
+}
+
+@media (max-width: 22.5rem) {
+  .appointment-modal__content {
+    padding: var(--spacing-md);
+  }
+
+  .appointment-modal .appointment-form__actions {
+    flex-direction: column;
+    flex-wrap: nowrap;
+  }
+
+  .appointment-modal .appointment-form__button {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .appointment-modal,
+  .appointment-modal__content,
+  .appointment-modal__close {
+    animation: none;
+    transition: none;
+  }
+}
