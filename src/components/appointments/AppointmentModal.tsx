@@ -105,13 +105,13 @@ export function AppointmentModal({
         <header className="appointment-modal__header">
           <div>
             <p className="appointment-modal__eyebrow">
-              {appointment ? "Zarządzanie wizytą" : "Nowa wizyta"}
+              {appointment ? "Manage appointment" : "New appointment"}
             </p>
             <h2
               className="appointment-modal__title"
               id="appointment-modal-title"
             >
-              {appointment ? "Edytuj wizytę" : "Dodaj wizytę"}
+              {appointment ? "Edit appointment" : "Add appointment"}
             </h2>
           </div>
 
@@ -120,7 +120,7 @@ export function AppointmentModal({
             type="button"
             onClick={onClose}
             disabled={isSubmitting}
-            aria-label="Zamknij formularz"
+            aria-label="Close form"
           >
             <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
               <path

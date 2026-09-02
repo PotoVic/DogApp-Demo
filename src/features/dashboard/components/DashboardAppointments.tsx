@@ -20,29 +20,29 @@ interface DashboardAppointmentsProps {
   mutationType: AppointmentMutationType;
 }
 
-// Maps the database appointment status to the Polish UI label.
+// Maps the database appointment status to the English UI label.
 function getAppointmentStatusLabel(status: Appointment["status"]): string {
   switch (status) {
     case "completed":
-      return "Zakończona";
+      return "Completed";
     case "cancelled":
-      return "Anulowana";
+      return "Cancelled";
     case "scheduled":
     default:
-      return "Zaplanowana";
+      return "Scheduled";
   }
 }
 
-// Formats the appointment count with Polish singular/plural wording.
+// Formats the appointment count with English singular/plural wording.
 function formatAppointmentCount(count: number): string {
-  if (count === 1) return "1 wizyta";
-  if (count >= 2 && count <= 4) return `${count} wizyty`;
-  return `${count} wizyt`;
+  if (count === 1) return "1 appointment";
+  if (count >= 2 && count <= 4) return `${count} appointments`;
+  return `${count} appointments`;
 }
 
 // Formats the selected dashboard date for the section heading.
 function formatSelectedDate(date: Date): string {
-  const label = new Intl.DateTimeFormat("pl-PL", {
+  const label = new Intl.DateTimeFormat("en-SE", {
     day: "numeric",
     month: "long",
   }).format(date);
@@ -81,7 +81,7 @@ export function DashboardAppointments({
       <div className="dashboard-today__header">
         <div>
           <h2 className="dashboard-section__title" id="dashboard-today-title">
-            {isToday ? "Dzisiejsze wizyty" : `Wizyty — ${formattedDate}`}
+            {isToday ? "Today's appointments" : `Appointments — ${formattedDate}`}
           </h2>
 
           {!isLoading && !error && (
@@ -94,7 +94,7 @@ export function DashboardAppointments({
 
       {isLoading && (
         <p className="appointments-state" role="status" aria-live="polite">
-          Ładowanie wizyt...
+          Loading appointments...
         </p>
       )}
 
@@ -102,7 +102,7 @@ export function DashboardAppointments({
         <div className="dashboard-today__empty" role="alert">
           <p>{error}</p>
           <button className="button-secondary" type="button" onClick={onRetry}>
-            Spróbuj ponownie
+            Try again
           </button>
         </div>
       )}
@@ -111,8 +111,8 @@ export function DashboardAppointments({
         <div className="dashboard-today__empty">
           <p>
             {isToday
-              ? "Brak wizyt na dziś."
-              : `Brak wizyt ${formattedDate.toLowerCase()}.`}
+              ? "No appointments today."
+              : `No appointments ${formattedDate.toLowerCase()}.`}
           </p>
         </div>
       )}
@@ -157,7 +157,7 @@ export function DashboardAppointments({
                   onClick={() => onEdit(appointment)}
                   disabled={Boolean(mutationType)}
                 >
-                  Edytuj
+                  Edit
                 </button>
 
                 {appointment.status === "scheduled" && (
@@ -168,14 +168,14 @@ export function DashboardAppointments({
                       onClick={() => onComplete(appointment)}
                       disabled={Boolean(mutationType)}
                     >
-                      Zakończ
+                      Complete
                     </button>
                     <button
                       type="button"
                       onClick={() => onCancel(appointment)}
                       disabled={Boolean(mutationType)}
                     >
-                      Anuluj
+                      Cancel
                     </button>
                   </>
                 )}
@@ -186,7 +186,7 @@ export function DashboardAppointments({
                   onClick={() => onDelete(appointment)}
                   disabled={Boolean(mutationType)}
                 >
-                  Usuń
+                  Delete
                 </button>
               </footer>
             </article>

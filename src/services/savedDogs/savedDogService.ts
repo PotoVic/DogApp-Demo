@@ -14,7 +14,7 @@ export type SavedDogInput = {
 
 // Normalizes optional saved-dog text before matching or storing it.
 const normalizeSavedDogValue = (value: string | null | undefined) =>
-  value?.trim().replace(/\s+/g, " ").toLocaleLowerCase("pl") ?? "";
+  value?.trim().replace(/\s+/g, " ").toLocaleLowerCase("en-US") ?? "";
 
 // Normalizes a phone number to digits for reliable matching/storage.
 const normalizePhoneNumber = (value: string | null | undefined) =>
@@ -32,7 +32,7 @@ const getCurrentUserId = async (): Promise<string> => {
   }
 
   if (!user) {
-    throw new Error("Użytkownik nie jest zalogowany.");
+    throw new Error("User is not logged in.");
   }
 
   return user.id;

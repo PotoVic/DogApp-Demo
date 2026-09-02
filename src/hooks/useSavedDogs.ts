@@ -33,7 +33,7 @@ export const useSavedDogs = () => {
       setError(
         err instanceof Error
           ? err
-          : new Error("Nie udało się pobrać zapisanych psów."),
+          : new Error("Unable to load saved dogs."),
       );
     } finally {
       setIsLoading(false);
@@ -50,7 +50,7 @@ export const useSavedDogs = () => {
 
     setSavedDogs((currentDogs) =>
       [...currentDogs, dog].sort((a, b) =>
-        a.name.localeCompare(b.name, "pl"),
+        a.name.localeCompare(b.name, "en-US"),
       ),
     );
 
@@ -67,7 +67,7 @@ export const useSavedDogs = () => {
     setSavedDogs((currentDogs) =>
       currentDogs
         .map((dog) => (dog.id === id ? updatedDog : dog))
-        .sort((a, b) => a.name.localeCompare(b.name, "pl")),
+        .sort((a, b) => a.name.localeCompare(b.name, "en-US")),
     );
 
     return updatedDog;

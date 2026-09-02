@@ -1,8 +1,8 @@
-# SpaKalendar — Stage 01: Project Foundation
+# DogCalendar — Stage 01: Project Foundation
 
 ## Purpose
 
-Stage 01 creates the technical foundation for SpaKalendar.
+Stage 01 creates the technical foundation for DogCalendar.
 
 The goal is not to build the complete application.
 
@@ -27,7 +27,7 @@ At the end of Stage 01, we should have:
 ```text
 React + TypeScript + Vite
         ↓
-SpaKalendar project
+DogCalendar project
         ↓
 Supabase connection
         ↓
@@ -145,7 +145,7 @@ Expected result:
 ```text
 Browser
    ↓
-SpaKalendar
+DogCalendar
    ↓
 Vite development server
    ↓
@@ -195,7 +195,7 @@ Do not create large numbers of empty subdirectories just for the sake of organiz
 
 # 7. Step 3 — Establish CSS Foundation
 
-SpaKalendar uses raw CSS rather than Sass.
+DogCalendar uses raw CSS rather than Sass.
 
 The CSS architecture should support:
 
@@ -246,7 +246,7 @@ The purpose is to verify that the application's basic layout architecture works.
 
 # 9. Step 5 — Create the Supabase Project
 
-Create a Supabase project for SpaKalendar.
+Create a Supabase project for DogCalendar.
 
 The project should use PostgreSQL as provided by Supabase.
 

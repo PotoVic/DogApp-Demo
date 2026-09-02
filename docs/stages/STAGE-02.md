@@ -1,8 +1,8 @@
-# SpaKalendar — Stage 02: Authentication & Authorization
+# DogCalendar — Stage 02: Authentication & Authorization
 
 ## Purpose
 
-Stage 02 adds secure authentication and database-level authorization to SpaKalendar.
+Stage 02 adds secure authentication and database-level authorization to DogCalendar.
 
 The goal is not to build appointment-management functionality.
 
@@ -179,7 +179,7 @@ Stage 03 will build the actual appointment-management functionality.
 
 # 5. Security Model
 
-SpaKalendar uses a layered security model:
+DogCalendar uses a layered security model:
 
 ```text
 Authentication

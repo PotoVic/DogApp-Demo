@@ -165,7 +165,7 @@ export function SavedDogsPanel() {
     const name = formData.name.trim();
 
     if (!name) {
-      setFormError("Podaj nazwę psa.");
+      setFormError("Enter the dog's name.");
       return;
     }
 
@@ -192,8 +192,8 @@ export function SavedDogsPanel() {
     } catch {
       setFormError(
         editingDogId
-          ? "Nie udało się zaktualizować psa. Spróbuj ponownie."
-          : "Nie udało się zapisać psa. Spróbuj ponownie.",
+          ? "Unable to update dog. Please try again."
+          : "Unable to save dog. Please try again.",
       );
     } finally {
       setIsSubmitting(false);
@@ -203,7 +203,7 @@ export function SavedDogsPanel() {
   // Confirms and deletes a saved dog.
   const handleDelete = async (dog: SavedDog) => {
     const confirmed = window.confirm(
-      `Czy na pewno chcesz usunąć psa "${dog.name}"?`,
+      `Are you sure you want to delete "${dog.name}"?`,
     );
 
     if (!confirmed) return;
@@ -213,7 +213,7 @@ export function SavedDogsPanel() {
     try {
       await removeSavedDog(dog.id);
     } catch {
-      setFormError("Nie udało się usunąć psa. Spróbuj ponownie.");
+      setFormError("Unable to delete dog. Please try again.");
     } finally {
       setDeletingDogId(null);
     }
@@ -224,15 +224,15 @@ export function SavedDogsPanel() {
       <section className="saved-dogs-panel" aria-labelledby="saved-dogs-title">
         <div className="saved-dogs-panel__header">
           <div>
-            <h2 id="saved-dogs-title">Zapisane psy</h2>
+            <h2 id="saved-dogs-title">Saved dogs</h2>
             <p>
-              Zapisz dane psa raz, aby szybciej uzupełniać kolejne wizyty.
+              Save a dog's details once to quickly fill in future appointments.
             </p>
           </div>
         </div>
 
         <p className="appointments-state" role="status" aria-live="polite">
-          Ładowanie zapisanych psów...
+          Loading saved dogs...
         </p>
       </section>
     );
@@ -243,9 +243,9 @@ export function SavedDogsPanel() {
       <section className="saved-dogs-panel" aria-labelledby="saved-dogs-title">
         <div className="saved-dogs-panel__header">
           <div>
-            <h2 id="saved-dogs-title">Zapisane psy</h2>
+            <h2 id="saved-dogs-title">Saved dogs</h2>
             <p>
-              Zapisz dane psa raz, aby szybciej uzupełniać kolejne wizyty.
+              Save a dog's details once to quickly fill in future appointments.
             </p>
           </div>
 
@@ -254,14 +254,14 @@ export function SavedDogsPanel() {
             type="button"
             onClick={openCreateForm}
           >
-            Dodaj psa
+            Add dog
           </button>
         </div>
 
         <div className="saved-dogs-panel__state" role="alert">
-          <p>Nie udało się wczytać zapisanych psów.</p>
+          <p>Unable to load saved dogs.</p>
           <p className="saved-dogs-panel__error">
-            Spróbuj ponownie później.
+            Please try again later.
           </p>
         </div>
       </section>
@@ -272,9 +272,9 @@ export function SavedDogsPanel() {
     <section className="saved-dogs-panel" aria-labelledby="saved-dogs-title">
       <div className="saved-dogs-panel__header">
         <div>
-          <h2 id="saved-dogs-title">Zapisane psy</h2>
+          <h2 id="saved-dogs-title">Saved dogs</h2>
           <p>
-            Zapisz dane psa raz, aby szybciej uzupełniać kolejne wizyty.
+            Save a dog's details once to quickly fill in future appointments.
           </p>
         </div>
 
@@ -283,7 +283,7 @@ export function SavedDogsPanel() {
           type="button"
           onClick={openCreateForm}
         >
-          Dodaj psa
+          Add dog
         </button>
       </div>
 
@@ -303,14 +303,14 @@ export function SavedDogsPanel() {
             <header className="saved-dog-modal__header">
               <div>
                 <p className="saved-dog-modal__eyebrow">
-                  {editingDogId ? "Zarządzanie psem" : "Nowy pies"}
+                  {editingDogId ? "Manage dog" : "New dog"}
                 </p>
 
                 <h2
                   className="saved-dog-modal__title"
                   id="saved-dog-modal-title"
                 >
-                  {editingDogId ? "Edytuj psa" : "Dodaj psa"}
+                  {editingDogId ? "Edit dog" : "Add dog"}
                 </h2>
               </div>
 
@@ -319,8 +319,8 @@ export function SavedDogsPanel() {
                 type="button"
                 onClick={closeForm}
                 disabled={isSubmitting}
-                aria-label="Zamknij formularz"
-                title="Zamknij formularz"
+                aria-label="Close form"
+                title="Close form"
               >
                 <img src={closeIcon} alt="" aria-hidden="true" />
               </button>
@@ -329,7 +329,7 @@ export function SavedDogsPanel() {
             <form className="saved-dog-form" onSubmit={handleSubmit}>
               <div className="saved-dog-form__fields">
                 <div className="saved-dog-form__field">
-                  <label htmlFor="saved-dog-name">Nazwa psa *</label>
+                  <label htmlFor="saved-dog-name">Dog name *</label>
 
                   <input
                     id="saved-dog-name"
@@ -348,7 +348,7 @@ export function SavedDogsPanel() {
                 </div>
 
                 <div className="saved-dog-form__field">
-                  <label htmlFor="saved-dog-breed">Rasa</label>
+                  <label htmlFor="saved-dog-breed">Breed</label>
 
                   <input
                     id="saved-dog-breed"
@@ -366,7 +366,7 @@ export function SavedDogsPanel() {
                 </div>
 
                 <div className="saved-dog-form__field">
-                  <label htmlFor="saved-dog-phone">Telefon</label>
+                  <label htmlFor="saved-dog-phone">Phone</label>
 
                   <input
                     id="saved-dog-phone"
@@ -406,7 +406,7 @@ export function SavedDogsPanel() {
                   onClick={closeForm}
                   disabled={isSubmitting}
                 >
-                  Anuluj
+                  Cancel
                 </button>
 
                 <button
@@ -415,10 +415,10 @@ export function SavedDogsPanel() {
                   disabled={isSubmitting}
                 >
                   {isSubmitting
-                    ? "Zapisywanie..."
+                    ? "Saving..."
                     : editingDogId
-                      ? "Zapisz zmiany"
-                      : "Zapisz psa"}
+                      ? "Save changes"
+                      : "Save dog"}
                 </button>
               </div>
             </form>
@@ -428,11 +428,11 @@ export function SavedDogsPanel() {
 
       {!showForm && savedDogs.length === 0 && (
         <div className="saved-dogs-panel__empty">
-          <h3>Nie masz jeszcze zapisanych psów</h3>
+          <h3>You don't have any saved dogs yet</h3>
 
           <p>
-            Dodaj pierwszego psa. Przy kolejnych wizytach jego dane będą
-            dostępne jako szybka podpowiedź.
+            Add your first dog. Their details will be
+            available as a quick suggestion for future appointments.
           </p>
 
           <button
@@ -440,7 +440,7 @@ export function SavedDogsPanel() {
             type="button"
             onClick={openCreateForm}
           >
-            Dodaj pierwszego psa
+            Add your first dog
           </button>
         </div>
       )}
@@ -470,7 +470,7 @@ export function SavedDogsPanel() {
                   onClick={() => openEditForm(dog)}
                   disabled={deletingDogId !== null}
                 >
-                  Edytuj
+                  Edit
                 </button>
 
                 <button
@@ -479,7 +479,7 @@ export function SavedDogsPanel() {
                   onClick={() => void handleDelete(dog)}
                   disabled={deletingDogId !== null}
                 >
-                  {deletingDogId === dog.id ? "Usuwanie..." : "Usuń"}
+                  {deletingDogId === dog.id ? "Deleting..." : "Delete"}
                 </button>
               </div>
             </li>

@@ -19,24 +19,24 @@ interface AppointmentListProps {
   onRetry?: () => void;
 }
 
-// Formats an ISO date string as a readable Polish date.
+// Formats an ISO date string as a readable English date.
 function formatAppointmentDate(date: string): string {
-  return new Intl.DateTimeFormat("pl-PL", {
+  return new Intl.DateTimeFormat("en-SE", {
     day: "numeric",
     month: "long",
     year: "numeric",
   }).format(new Date(`${date}T00:00:00`));
 }
 
-// Maps an appointment status to its Polish display label.
+// Maps an appointment status to its English display label.
 function getStatusLabel(status: Appointment["status"]): string {
   switch (status) {
     case "scheduled":
-      return "Zaplanowana";
+      return "Scheduled";
     case "completed":
-      return "Zakończona";
+      return "Completed";
     case "cancelled":
-      return "Anulowana";
+      return "Cancelled";
   }
 }
 
@@ -57,7 +57,7 @@ export function AppointmentList({
   if (loading) {
     return (
       <p className="appointments-state" role="status" aria-live="polite">
-        Ładowanie wizyt...
+        Loading appointments...
       </p>
     );
   }
@@ -66,14 +66,14 @@ export function AppointmentList({
     return (
       <section className="appointment-list appointment-list--state" aria-live="polite">
         {showTitle && (
-          <h2 className="appointment-list__title">Wizyty</h2>
+          <h2 className="appointment-list__title">Appointments</h2>
         )}
 
         <div className="appointment-list__state" role="alert">
           <p className="appointments-state">{error}</p>
           {onRetry && (
             <button className="button-secondary" type="button" onClick={onRetry}>
-              Spróbuj ponownie
+              Try again
             </button>
           )}
         </div>
@@ -85,13 +85,13 @@ export function AppointmentList({
     return (
       <section className="appointment-list appointment-list--state">
         {showTitle && (
-          <h2 className="appointment-list__title">Wizyty</h2>
+          <h2 className="appointment-list__title">Appointments</h2>
         )}
 
         <div className="appointment-list__state">
-          <p className="appointment-list__empty-title">Brak wizyt</p>
+          <p className="appointment-list__empty-title">No appointments</p>
           <p className="appointments-state">
-            Nie masz jeszcze żadnych zapisanych wizyt. Dodaj pierwszą wizytę, aby rozpocząć.
+            You don't have any saved appointments yet. Add your first appointment to get started.
           </p>
         </div>
       </section>
@@ -103,7 +103,7 @@ export function AppointmentList({
   return (
     <section className="appointment-list">
       {showTitle && (
-        <h2 className="appointment-list__title">Wizyty</h2>
+        <h2 className="appointment-list__title">Appointments</h2>
       )}
 
       <ul className="appointment-list__items">
@@ -161,7 +161,7 @@ export function AppointmentList({
                   onClick={() => onEdit(appointment)}
                   disabled={isMutating}
                 >
-                  Edytuj
+                  Edit
                 </button>
 
                 {appointment.status === "scheduled" && (
@@ -172,7 +172,7 @@ export function AppointmentList({
                       onClick={() => onComplete(appointment)}
                       disabled={isMutating}
                     >
-                      {isSavingThisAppointment ? "Zapisywanie..." : "Zakończ"}
+                      {isSavingThisAppointment ? "Saving..." : "Complete"}
                     </button>
 
                     <button
@@ -181,7 +181,7 @@ export function AppointmentList({
                       onClick={() => onCancel(appointment)}
                       disabled={isMutating}
                     >
-                      {isSavingThisAppointment ? "Zapisywanie..." : "Anuluj"}
+                      {isSavingThisAppointment ? "Saving..." : "Cancel"}
                     </button>
                   </>
                 )}
@@ -192,7 +192,7 @@ export function AppointmentList({
                   onClick={() => onDelete(appointment)}
                   disabled={isMutating}
                 >
-                  {isDeletingThisAppointment ? "Usuwanie..." : "Usuń"}
+                  {isDeletingThisAppointment ? "Deleting..." : "Delete"}
                 </button>
               </div>
             </li>

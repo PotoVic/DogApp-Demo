@@ -23,18 +23,18 @@ const getCurrentMonth = () => {
 };
 
 const MONTH_NAMES = [
-  "Styczeń",
-  "Luty",
-  "Marzec",
-  "Kwiecień",
-  "Maj",
-  "Czerwiec",
-  "Lipiec",
-  "Sierpień",
-  "Wrzesień",
-  "Październik",
-  "Listopad",
-  "Grudzień",
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
 ];
 
 // Builds the YYYY-MM key used to select appointments for a month.
@@ -75,7 +75,7 @@ export default function Reports() {
           return;
         }
 
-        setAppointmentsError("Nie udało się wczytać wizyt. Spróbuj ponownie.");
+        setAppointmentsError("Unable to load appointments. Please try again.");
       } finally {
         if (isMounted) {
           setIsLoadingAppointments(false);
@@ -117,26 +117,26 @@ export default function Reports() {
   return (
     <section className="reports-page" aria-labelledby="reports-title">
       <header className="reports-page__header">
-        <h1 id="reports-title">Raporty</h1>
-        <p>Generuj miesięczny raport swoich wizyt.</p>
+        <h1 id="reports-title">Reports</h1>
+        <p>Generate a monthly report of your appointments.</p>
       </header>
 
       <div className="reports-page__workspace">
         <div className="reports-page__card">
           <div className="reports-page__card-header">
-            <h2>Raport miesięczny</h2>
-            <p>Wybierz miesiąc, dla którego chcesz wygenerować raport PDF.</p>
+            <h2>Monthly report</h2>
+            <p>Select the month for which you want to generate a PDF report.</p>
           </div>
 
           <div className="reports-page__month-selector">
-            <span className="reports-page__label">Wybierz miesiąc</span>
+            <span className="reports-page__label">Select month</span>
 
             <div className="reports-page__month-navigation">
               <button
                 type="button"
                 className="reports-page__month-arrow"
                 onClick={() => changeMonth(-1)}
-                aria-label="Poprzedni miesiąc"
+                aria-label="Previous month"
               >
                 <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
                   <path
@@ -161,7 +161,7 @@ export default function Reports() {
                 type="button"
                 className="reports-page__month-arrow"
                 onClick={() => changeMonth(1)}
-                aria-label="Następny miesiąc"
+                aria-label="Next month"
               >
                 <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
                   <path
@@ -199,7 +199,7 @@ export default function Reports() {
               });
             }}
           >
-            Generuj PDF
+            Generate PDF
           </button>
         </div>
 
@@ -207,42 +207,42 @@ export default function Reports() {
           <div className="reports-page__details-header">
             <div>
               <h2>
-                Raport za {MONTH_NAMES[month]} {year}
+                Report for {MONTH_NAMES[month]} {year}
               </h2>
 
               <p>
                 {isLoadingAppointments
-                  ? "Wczytywanie danych..."
+                  ? "Loading data..."
                   : `${monthlyAppointments.length} ${
                       monthlyAppointments.length === 0
-                        ? "wizyt"
+                        ? "appointments"
                         : monthlyAppointments.length === 1
-                          ? "wizyta"
+                          ? "appointment"
                           : monthlyAppointments.length >= 2 &&
                               monthlyAppointments.length <= 4
-                            ? "wizyty"
-                            : "wizyt"
+                            ? "appointments"
+                            : "appointments"
                     } · ${formatCurrency(monthlyEarnings)}`}
               </p>
             </div>
           </div>
 
           <div className="reports-page__included">
-            <h3>Raport PDF będzie zawierał:</h3>
+            <h3>The PDF report will include:</h3>
 
             <ul className="reports-page__included-list">
-              <li>Wszystkie wizyty z wybranego miesiąca</li>
-              <li>Datę i godzinę</li>
-              <li>Imię psa</li>
-              <li>Rasę, jeśli została podana</li>
-              <li>Cenę wizyty</li>
-              <li>Status wizyty</li>
+              <li>All appointments from the selected month</li>
+              <li>Date and time</li>
+              <li>Dog name</li>
+              <li>Breed, if provided</li>
+              <li>Appointment price</li>
+              <li>Appointment status</li>
             </ul>
           </div>
 
           <p className="reports-page__pdf-note">
-            Raport zostanie zapisany jako plik PDF, który możesz później
-            wydrukować lub przechować na swoim urządzeniu.
+            The report will be saved as a PDF file that you can later
+            print or keep on your device.
           </p>
         </div>
       </div>

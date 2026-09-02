@@ -1,6 +1,6 @@
 {
-  "name": "SpaKalendar",
-  "short_name": "SpaKalendar",
+  "name": "DogCalendar",
+  "short_name": "DogCalendar",
   "description": "Prosty system zarządzania wizytami dla groomera.",
   "lang": "pl",
   "dir": "ltr",

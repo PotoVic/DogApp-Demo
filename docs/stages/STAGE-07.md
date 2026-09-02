@@ -1,4 +1,4 @@
-# SpaKalendar --- Stage 07: PWA
+# DogCalendar --- Stage 07: PWA
 
 ## Status
 
@@ -14,7 +14,7 @@
 
 # 1. Purpose
 
-Stage 07 adds Progressive Web App functionality to SpaKalendar.
+Stage 07 adds Progressive Web App functionality to DogCalendar.
 
 The goal is to make the existing responsive web application installable
 and more app-like on supported devices without changing its core
@@ -27,13 +27,13 @@ stage.
 
 # 2. Stage Goal
 
-At the end of Stage 07, SpaKalendar should:
+At the end of Stage 07, DogCalendar should:
 
 -   Have a valid web app manifest.
 -   Have correct application metadata.
 -   Have appropriate application icons.
 -   Be installable where browser/platform support allows.
--   Launch with the correct SpaKalendar branding.
+-   Launch with the correct DogCalendar branding.
 -   Support standalone display where supported.
 -   Register a service worker correctly in production.
 -   Cache safe static application resources.
@@ -254,7 +254,7 @@ Findings:
 -   No existing PWA/service-worker implementation.
 -   No Workbox integration.
 -   No `vite-plugin-pwa` dependency.
--   Existing favicon and SpaKalendar branding assets were reusable.
+-   Existing favicon and DogCalendar branding assets were reusable.
 -   Production deployment is Vercel through the connected GitHub
     repository.
 -   No database changes were required.
@@ -268,8 +268,8 @@ configuration.
 Implemented:
 
 -   `public/manifest.webmanifest`.
--   `name: SpaKalendar`.
--   `short_name: SpaKalendar`.
+-   `name: DogCalendar`.
+-   `short_name: DogCalendar`.
 -   Polish language metadata.
 -   `start_url: /`.
 -   `scope: /`.
@@ -388,7 +388,7 @@ Verified:
 -   Authentication works.
 -   Appointment functionality works.
 -   Add-to-home-screen installation is available on the tested platform.
--   SpaKalendar launches as a standalone application.
+-   DogCalendar launches as a standalone application.
 -   Branding and application name are correct.
 
 ------------------------------------------------------------------------

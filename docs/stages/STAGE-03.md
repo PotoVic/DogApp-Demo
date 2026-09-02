@@ -1,9 +1,9 @@
-# SpaKalendar --- Stage 03: Appointments
+# DogCalendar --- Stage 03: Appointments
 
 ## Purpose
 
 Stage 03 implements the core appointment-management functionality of
-SpaKalendar.
+DogCalendar.
 
 The goal is to build the first real application workflow on top of the
 authentication, authorization, and database foundation completed in

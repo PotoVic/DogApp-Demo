@@ -1,4 +1,4 @@
-# SpaKalendar — Security
+# DogCalendar — Security
 
 ## Authorization model
 

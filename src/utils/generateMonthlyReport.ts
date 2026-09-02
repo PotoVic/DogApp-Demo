@@ -7,20 +7,20 @@ import type { Appointment } from "../types/appointment";
 import regularFontUrl from "../assets/fonts/DejaVuSans-Latin.ttf?url";
 import boldFontUrl from "../assets/fonts/DejaVuSans-Bold-Latin.ttf?url";
 
-// Polish month names used in the generated report.
+// English month names used in the generated report.
 const MONTH_NAMES = [
-  "Styczeń",
-  "Luty",
-  "Marzec",
-  "Kwiecień",
-  "Maj",
-  "Czerwiec",
-  "Lipiec",
-  "Sierpień",
-  "Wrzesień",
-  "Październik",
-  "Listopad",
-  "Grudzień",
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
 ];
 
 // Inputs required to build a monthly PDF report.
@@ -59,14 +59,14 @@ const loadFonts = async () => {
     fontsPromise = Promise.all([
       fetch(regularFontUrl).then((response) => {
         if (!response.ok) {
-          throw new Error("Nie udało się wczytać czcionki PDF.");
+          throw new Error("Unable to load the PDF font.");
         }
 
         return response.arrayBuffer();
       }),
       fetch(boldFontUrl).then((response) => {
         if (!response.ok) {
-          throw new Error("Nie udało się wczytać czcionki PDF.");
+          throw new Error("Unable to load the PDF font.");
         }
 
         return response.arrayBuffer();
@@ -80,9 +80,9 @@ const loadFonts = async () => {
   return fontsPromise;
 };
 
-// Formats a report amount using Polish decimal separators without a currency symbol.
+// Formats a report amount using Swedish decimal formatting without a currency symbol.
 const formatEarnings = (value: number) =>
-  new Intl.NumberFormat("pl-PL", {
+  new Intl.NumberFormat("sv-SE", {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   }).format(value);
@@ -98,15 +98,15 @@ const formatDate = (date: string) => {
 const formatPrice = (price: number) =>
   `${formatEarnings(price)} kr`;
 
-// Maps appointment status to the Polish label used in the PDF.
+// Maps appointment status to the English label used in the PDF.
 const getStatusLabel = (status: Appointment["status"]) => {
   switch (status) {
     case "completed":
-      return "Zakończona";
+      return "Completed";
     case "cancelled":
-      return "Anulowana";
+      return "Cancelled";
     case "scheduled":
-      return "Zaplanowana";
+      return "Scheduled";
   }
 };
 
@@ -164,7 +164,7 @@ const drawPageNumber = (pdf: jsPDF) => {
   pdf.setFont("DejaVuSans", "normal");
   pdf.setFontSize(8);
   pdf.setTextColor(110, 110, 110);
-  pdf.text(`Strona ${pageNumber}`, pageWidth - 15, pageHeight - 10, {
+  pdf.text(`Page ${pageNumber}`, pageWidth - 15, pageHeight - 10, {
     align: "right",
   });
   pdf.setTextColor(0, 0, 0);
@@ -206,7 +206,7 @@ export async function generateMonthlyReport({
   pdf.setTextColor(30, 30, 30);
   pdf.setFont("DejaVuSans", "bold");
   pdf.setFontSize(19);
-  pdf.text("Raport miesięczny", 15, 20);
+  pdf.text("Monthly report", 15, 20);
 
   // Month
   pdf.setTextColor(218, 91, 127);
@@ -224,7 +224,7 @@ export async function generateMonthlyReport({
   pdf.setTextColor(105, 105, 105);
   pdf.setFont("DejaVuSans", "normal");
   pdf.setFontSize(7);
-  pdf.text("Okres raportu", pageWidth - 15, 17, {
+  pdf.text("Report period", pageWidth - 15, 17, {
     align: "right",
   });
 
@@ -241,7 +241,7 @@ export async function generateMonthlyReport({
   pdf.setTextColor(105, 105, 105);
   pdf.setFont("DejaVuSans", "normal");
   pdf.setFontSize(8);
-  pdf.text("Liczba wizyt", 15, summaryY);
+  pdf.text("Number of appointments", 15, summaryY);
 
   pdf.setTextColor(45, 45, 45);
   pdf.setFont("DejaVuSans", "bold");
@@ -255,7 +255,7 @@ export async function generateMonthlyReport({
   pdf.setTextColor(105, 105, 105);
   pdf.setFont("DejaVuSans", "normal");
   pdf.setFontSize(8);
-  pdf.text("Zarobek", 65, summaryY);
+  pdf.text("Earnings", 65, summaryY);
 
   pdf.setTextColor(218, 91, 127);
   pdf.setFont("DejaVuSans", "bold");
@@ -265,11 +265,11 @@ export async function generateMonthlyReport({
   pdf.setTextColor(0, 0, 0);
 
   const columns = [
-    { label: "Data", x: 15, width: 27 },
-    { label: "Godzina", x: 42, width: 20 },
-    { label: "Pies", x: 62, width: 39 },
-    { label: "Rasa", x: 101, width: 42 },
-    { label: "Cena", x: 143, width: 22 },
+    { label: "Date", x: 15, width: 27 },
+    { label: "Time", x: 42, width: 20 },
+    { label: "Dog", x: 62, width: 39 },
+    { label: "Breed", x: 101, width: 42 },
+    { label: "Price", x: 143, width: 22 },
     { label: "Status", x: 165, width: 30 },
   ];
 
@@ -347,5 +347,5 @@ export async function generateMonthlyReport({
     .replace(/[\u0300-\u036f]/g, "")
     .toLowerCase();
 
-  pdf.save(`raport-${filenameMonth}-${year}.pdf`);
+  pdf.save(`report-${filenameMonth}-${year}.pdf`);
 }

@@ -87,16 +87,16 @@ export default function AppointmentsPage() {
     <div className="workspace-page">
       <header className="workspace-page__header">
         <div>
-          <h1>Wizyty</h1>
+          <h1>Appointments</h1>
           <p className="workspace-page__description">
-            Zarządzaj wizytami i zapisanymi psami w jednym miejscu.
+            Manage appointments and saved dogs in one place.
           </p>
         </div>
       </header>
 
       <nav
         className="appointments-section-tabs"
-        aria-label="Sekcje wizyt"
+        aria-label="Appointment sections"
       >
         <button
           className={`appointments-section-tabs__button${
@@ -108,7 +108,7 @@ export default function AppointmentsPage() {
           aria-pressed={activeSection === "appointments"}
           onClick={() => setActiveSection("appointments")}
         >
-          Wizyty
+          Appointments
         </button>
 
         <button
@@ -121,16 +121,16 @@ export default function AppointmentsPage() {
           aria-pressed={activeSection === "saved-dogs"}
           onClick={() => setActiveSection("saved-dogs")}
         >
-          Zapisane psy
+          Saved dogs
         </button>
       </nav>
 
       {activeSection === "appointments" && (
         <div className="appointments-section-toolbar">
           <div>
-            <h2 className="appointments-section-toolbar__title">Wizyty</h2>
+            <h2 className="appointments-section-toolbar__title">Appointments</h2>
             <p className="appointments-section-toolbar__description">
-              Przeglądaj swoje wizyty i zarządzaj nimi.
+              View and manage your appointments.
             </p>
           </div>
 
@@ -140,7 +140,7 @@ export default function AppointmentsPage() {
             onClick={openNewAppointment}
             disabled={Boolean(manager.mutationType)}
           >
-            Dodaj wizytę
+            Add appointment
           </button>
         </div>
       )}

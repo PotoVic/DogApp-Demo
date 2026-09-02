@@ -15,7 +15,7 @@ function RootRoute() {
   const { user, loading } = useAuth();
 
   if (loading) {
-    return <p>Ładowanie...</p>;
+    return <p>Loading...</p>;
   }
 
   return <Navigate to={user ? "/app" : "/login"} replace />;

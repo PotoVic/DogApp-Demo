@@ -1,4 +1,4 @@
-# SpaKalendar — Stage 08: Monthly PDF Reports
+# DogCalendar — Stage 08: Monthly PDF Reports
 
 ## Status
 
@@ -16,7 +16,7 @@
 
 Stage 08 adds a reliable monthly PDF reporting workflow without introducing a second data source or changing the existing appointment architecture.
 
-The report is generated from the authenticated appointment data already used by SpaKalendar.
+The report is generated from the authenticated appointment data already used by DogCalendar.
 
 ---
 
@@ -121,7 +121,7 @@ PDF reporting does not create a new authorization system. It consumes appointmen
 
 No service-role key, privileged credential, or server-side PDF endpoint was introduced.
 
-The generated PDF is stored/downloaded on the user's device rather than persisted by SpaKalendar.
+The generated PDF is stored/downloaded on the user's device rather than persisted by DogCalendar.
 
 ---
 

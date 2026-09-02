@@ -64,7 +64,7 @@ export function Toast({
         className="toast__close"
         type="button"
         onClick={handleClose}
-        aria-label="Zamknij komunikat"
+        aria-label="Close notification"
       >
         <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
           <path

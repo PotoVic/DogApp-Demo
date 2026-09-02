@@ -1,4 +1,4 @@
-# SpaKalendar — UI/UX
+# DogCalendar — UI/UX
 
 ## Primary navigation
 

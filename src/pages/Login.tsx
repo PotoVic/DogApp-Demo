@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { authService } from "../services/auth/auth";
 import { useAuth } from "../hooks/useAuth";
 
-import logo from "../assets/SpaKalendar-Logo.png";
+import logo from "../assets/DogCalendar-Logo.png";
 import "./login.css";
 // Login page: collects credentials and starts the Supabase authentication flow.
 export default function Login() {
@@ -33,7 +33,7 @@ export default function Login() {
     setError("");
 
     if (!email.trim() || !password) {
-      setError("Wprowadź adres e-mail i hasło.");
+      setError("Enter your email address and password.");
       return;
     }
 
@@ -42,7 +42,7 @@ export default function Login() {
     const { error } = await authService.signIn(email.trim(), password);
 
     if (error) {
-      setError("Nie udało się zalogować. Sprawdź dane logowania.");
+      setError("Unable to log in. Check your credentials.");
     }
      
    
@@ -61,17 +61,17 @@ export default function Login() {
             height="56"
           />
           <h1 className="login-card__title" id="login-title">
-            SpaKalendar
+            DogCalendar
           </h1>
           <p className="login-card__description">
-            Zaloguj się, aby kontynuować.
+            Log in to continue.
           </p>
         </div>
 
         <form className="login-form" onSubmit={handleSubmit}>
           <div className="login-form__field">
             <label className="login-form__label" htmlFor="email">
-              Adres e-mail
+              Email address
             </label>
             <input
               id="email"
@@ -87,7 +87,7 @@ export default function Login() {
 
           <div className="login-form__field">
             <label className="login-form__label" htmlFor="password">
-              Hasło
+              Password
             </label>
             <input
               id="password"
@@ -104,7 +104,7 @@ export default function Login() {
           {error && <p className="login-form__error" role="alert">{error}</p>}
 
           <button className="button-primary login-form__submit" type="submit" disabled={loading}>
-            {loading ? "Logowanie..." : "Zaloguj się"}
+            {loading ? "Logging in..." : "Log in"}
           </button>
         </form>
       </section>

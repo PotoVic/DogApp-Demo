@@ -1,4 +1,4 @@
-# SpaKalendar — Stage 06: UI/UX Polish
+# DogCalendar — Stage 06: UI/UX Polish
 
 ## Status
 
@@ -14,7 +14,7 @@
 
 # 1. Purpose
 
-Stage 06 transformed the functional SpaKalendar application into a more
+Stage 06 transformed the functional DogCalendar application into a more
 consistent, responsive, accessible, and comfortable product.
 
 It was a refinement stage and did not introduce future-stage functionality.

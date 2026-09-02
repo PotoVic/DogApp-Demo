@@ -36,7 +36,7 @@ export async function createAppointment(
   }
 
   if (!user) {
-    throw new Error("Użytkownik nie jest zalogowany.");
+    throw new Error("User is not logged in.");
   }
 
   const { data, error } = await supabase

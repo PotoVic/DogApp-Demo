@@ -16,7 +16,7 @@ import "./appointments.css";
 // Maps appointment input fields to optional validation messages.
 type AppointmentFormErrors = Partial<Record<keyof AppointmentInput, string>>;
 
-// Data emitted by the appointment form after validation, including the optional Saved Dog profile ID.
+// Date emitted by the appointment form after validation, including the optional Saved Dog profile ID.
 export interface AppointmentFormSubmitData {
   appointment: AppointmentInput;
   selectedSavedDogId: string | null;
@@ -106,7 +106,7 @@ export function AppointmentForm({
 
   // Filters saved dogs by the current dog-name search text.
   const matchingSavedDogs = useMemo(() => {
-    const searchTerm = formData.dog_name.trim().toLocaleLowerCase("pl");
+    const searchTerm = formData.dog_name.trim().toLocaleLowerCase("en-US");
 
     if (!searchTerm) {
       return [];
@@ -114,8 +114,8 @@ export function AppointmentForm({
 
     return savedDogs
       .filter((dog) => {
-        const name = dog.name.toLocaleLowerCase("pl");
-        const breed = dog.breed?.toLocaleLowerCase("pl") ?? "";
+        const name = dog.name.toLocaleLowerCase("en-US");
+        const breed = dog.breed?.toLocaleLowerCase("en-US") ?? "";
 
         return name.includes(searchTerm) || breed.includes(searchTerm);
       })
@@ -140,26 +140,26 @@ export function AppointmentForm({
     const newErrors: AppointmentFormErrors = {};
 
     if (!formData.dog_name.trim()) {
-      newErrors.dog_name = "Podaj nazwę psa.";
+      newErrors.dog_name = "Enter the dog's name.";
     }
 
     if (!formData.appointment_date) {
-      newErrors.appointment_date = "Wybierz datę wizyty.";
+      newErrors.appointment_date = "Select an appointment date.";
     }
 
     if (!formData.appointment_time) {
-      newErrors.appointment_time = "Wybierz godzinę wizyty.";
+      newErrors.appointment_time = "Select an appointment time.";
     } else if (!timeOptions.includes(formData.appointment_time)) {
       newErrors.appointment_time =
-        "Godzina wizyty musi być wybrana co 5 minut.";
+        "Appointment time must be selected in 5-minute intervals.";
     }
 
     const parsedPrice = Number(priceInput);
 
     if (priceInput.trim() === "") {
-      newErrors.price = "Podaj cenę wizyty.";
+      newErrors.price = "Enter the appointment price.";
     } else if (!Number.isFinite(parsedPrice) || parsedPrice < 0) {
-      newErrors.price = "Cena nie może być ujemna.";
+      newErrors.price = "Price cannot be negative.";
     }
 
     if (formData.appointment_time) {
@@ -174,7 +174,7 @@ export function AppointmentForm({
 
       if (!isValidTime) {
         newErrors.appointment_time =
-          "Wybierz godzinę od 07:00 do 18:00 w odstępach co 5 minut.";
+          "Select a time between 07:00 and 18:00 in 5-minute intervals.";
       }
     }
 
@@ -185,7 +185,7 @@ export function AppointmentForm({
     ];
 
     if (!validStatuses.includes(formData.status)) {
-      newErrors.status = "Wybierz prawidłowy status wizyty.";
+      newErrors.status = "Select a valid appointment status.";
     }
 
     return newErrors;
@@ -229,7 +229,7 @@ export function AppointmentForm({
     <form className="appointment-form" onSubmit={handleSubmit}>
       <div className="appointment-form__field">
         <label className="appointment-form__label" htmlFor="dog_name">
-          Nazwa psa *
+          Dog name *
         </label>
 
         <input
@@ -254,7 +254,7 @@ export function AppointmentForm({
 
         {isLoadingSavedDogs && (
           <p className="appointment-form__hint" role="status">
-            Ładowanie zapisanych psów...
+            Loading saved dogs...
           </p>
         )}
 
@@ -265,7 +265,7 @@ export function AppointmentForm({
             <div
               className="appointment-form__saved-dogs"
               role="listbox"
-              aria-label="Zapisane psy"
+              aria-label="Saved dogs"
             >
               {matchingSavedDogs.map((dog) => (
                 <button
@@ -294,7 +294,7 @@ export function AppointmentForm({
 
         {savedDogsError && (
           <p className="appointment-form__hint">
-            Nie udało się wczytać zapisanych psów.
+            Unable to load saved dogs.
           </p>
         )}
 
@@ -307,7 +307,7 @@ export function AppointmentForm({
 
       <div className="appointment-form__field">
         <label className="appointment-form__label" htmlFor="breed">
-          Rasa
+          Breed
         </label>
 
         <input
@@ -328,7 +328,7 @@ export function AppointmentForm({
       <div className="appointment-form__row">
         <div className="appointment-form__field">
             <label className="appointment-form__label" htmlFor="saved_dog_phone">
-            Telefon
+            Phone
           </label>
 
           <input
@@ -347,13 +347,13 @@ export function AppointmentForm({
             autoComplete="tel"
             inputMode="tel"
             maxLength={30}
-            placeholder="np. +48 532 483 896"
+            placeholder="e.g. +48 532 483 896"
           />
         </div>
 
         <div className="appointment-form__field">
           <label className="appointment-form__label" htmlFor="price">
-            Cena *
+            Price *
           </label>
 
           <input
@@ -395,7 +395,7 @@ export function AppointmentForm({
       <div className="appointment-form__row">
         <div className="appointment-form__field">
                     <label className="appointment-form__label" htmlFor="appointment_time">
-            Godzina *
+            Time *
           </label>
 
           <select
@@ -412,7 +412,7 @@ export function AppointmentForm({
             required
             disabled={isSubmitting}
           >
-            <option value="">Wybierz godzinę</option>
+            <option value="">Select a time</option>
             {timeOptions.map((time) => (
               <option key={time} value={time}>
                 {time}
@@ -429,7 +429,7 @@ export function AppointmentForm({
 
         <div className="appointment-form__field">
           <label className="appointment-form__label" htmlFor="appointment_date">
-            Data *
+            Date *
           </label>
 
           <div className="appointment-form__date-control">
@@ -482,9 +482,9 @@ export function AppointmentForm({
           }
           disabled={isSubmitting}
         >
-          <option value="scheduled">Zaplanowana</option>
-          <option value="completed">Zakończona</option>
-          <option value="cancelled">Anulowana</option>
+          <option value="scheduled">Scheduled</option>
+          <option value="completed">Completed</option>
+          <option value="cancelled">Cancelled</option>
         </select>
 
         {errors.status && (
@@ -496,7 +496,7 @@ export function AppointmentForm({
 
       <div className="appointment-form__field appointment-form__field--full">
         <label className="appointment-form__label" htmlFor="note">
-          Notatka
+          Note
         </label>
 
         <textarea
@@ -521,7 +521,7 @@ export function AppointmentForm({
           onClick={handleCancel}
           disabled={isSubmitting}
         >
-          Anuluj
+          Cancel
         </button>
 
         <button
@@ -530,10 +530,10 @@ export function AppointmentForm({
           disabled={isSubmitting}
         >
           {isSubmitting
-            ? "Zapisywanie..."
+            ? "Saving..."
             : appointment
-              ? "Zapisz zmiany"
-              : "Zapisz"}
+              ? "Save changes"
+              : "Save"}
         </button>
       </div>
     </form>

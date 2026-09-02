@@ -1,4 +1,4 @@
-# SpaKalendar — Full Vitest suite
+# DogCalendar — Full Vitest suite
 
 This suite is designed for the current source and tests application logic without
 writing to the real Supabase database.

@@ -121,9 +121,9 @@ export default function AppHome() {
   return (
     <div className="dashboard-page">
       <header className="dashboard-page__header">
-        <h1>Pulpit</h1>
+        <h1>Dashboard</h1>
         <p>
-          Przegląd dzisiejszych wizyt, kalendarza i najważniejszych informacji.
+          Overview of today's appointments, calendar, and key information.
         </p>
       </header>
 
@@ -134,7 +134,7 @@ export default function AppHome() {
         isLoading={manager.isLoading}
       />
 
-      <section className="dashboard-content" aria-label="Główna zawartość pulpitu">
+      <section className="dashboard-content" aria-label="Main dashboard content">
         <div className="dashboard-content__calendar" id="calendar">
           <DashboardMiniCalendar
             appointments={manager.appointments}
@@ -162,7 +162,7 @@ export default function AppHome() {
 
       {isSaving && (
         <p className="appointments-state" role="status" aria-live="polite">
-          Zapisywanie...
+          Saving...
         </p>
       )}
 

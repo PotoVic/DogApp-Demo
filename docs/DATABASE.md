@@ -1,4 +1,4 @@
-# SpaKalendar — Database
+# DogCalendar — Database
 
 ## Source of truth
 

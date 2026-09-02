@@ -32,30 +32,30 @@ export function DashboardSummary({
   return (
     <section
       className="dashboard-summary"
-      aria-label="Podsumowanie"
+      aria-label="Summary"
     >
       <div className="dashboard-summary__grid">
         <article className="dashboard-summary__card">
-          <h3>Dzisiejszy zarobek</h3>
+          <h3>Today's earnings</h3>
           <p
-            aria-label={`Dzisiejszy zarobek: ${formatCurrency(todayEarnings)}`}
+            aria-label={`Today's earnings: ${formatCurrency(todayEarnings)}`}
           >
             {isLoading ? "—" : formatCurrency(todayEarnings)}
           </p>
         </article>
 
         <article className="dashboard-summary__card">
-          <h3>Zarobek w tym miesiącu</h3>
+          <h3>Earnings this month</h3>
           <p
-            aria-label={`Zarobek w tym miesiącu: ${formatCurrency(monthlyEarnings)}`}
+            aria-label={`Earnings this month: ${formatCurrency(monthlyEarnings)}`}
           >
             {isLoading ? "—" : formatCurrency(monthlyEarnings)}
           </p>
         </article>
 
         <article className="dashboard-summary__card">
-          <h3>Liczba wizyt</h3>
-          <p aria-label={`Liczba wizyt w tym miesiącu: ${monthlyAppointmentCount}`}>
+          <h3>Number of appointments</h3>
+          <p aria-label={`Number of appointments this month: ${monthlyAppointmentCount}`}>
             {isLoading ? "—" : monthlyAppointmentCount}
           </p>
         </article>

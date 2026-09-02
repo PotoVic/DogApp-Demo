@@ -43,7 +43,7 @@ export function useAppointmentManager() {
       setLoadError(null);
       setAppointments(await getAppointments());
     } catch {
-      setLoadError("Nie udało się pobrać wizyt. Spróbuj ponownie.");
+      setLoadError("Unable to load appointments. Please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -94,11 +94,11 @@ export function useAppointmentManager() {
       setMutationType("saving");
       setMutationAppointmentId(null);
       await createAppointment(data);
-      setSuccessMessage("Wizyta została zapisana.");
+      setSuccessMessage("Appointment saved.");
       await loadAppointments();
       return true;
     } catch {
-      setActionError("Nie udało się zapisać wizyty. Spróbuj ponownie.");
+      setActionError("Unable to save appointment. Please try again.");
       return false;
     } finally {
       setMutationType(null);
@@ -110,8 +110,8 @@ export function useAppointmentManager() {
     runMutation(
       appointmentId,
       () => updateAppointment(appointmentId, data),
-      "Wizyta została zaktualizowana.",
-      "Nie udało się zaktualizować wizyty. Spróbuj ponownie.",
+      "Appointment updated.",
+      "Unable to update appointment. Please try again.",
       "saving",
     );
 
@@ -120,8 +120,8 @@ export function useAppointmentManager() {
     runMutation(
       appointmentId,
       () => cancelAppointment(appointmentId),
-      "Wizyta została anulowana.",
-      "Nie udało się anulować wizyty. Spróbuj ponownie.",
+      "Appointment cancelled.",
+      "Unable to cancel appointment. Please try again.",
       "saving",
     );
 
@@ -130,15 +130,15 @@ export function useAppointmentManager() {
     runMutation(
       appointmentId,
       () => completeAppointment(appointmentId),
-      "Wizyta została oznaczona jako zakończona.",
-      "Nie udało się zakończyć wizyty. Spróbuj ponownie.",
+      "Appointment marked as completed.",
+      "Unable to complete appointment. Please try again.",
       "saving",
     );
 
   // Confirms and deletes an appointment through the shared mutation pipeline.
   const remove = async (appointment: Appointment) => {
     const confirmed = window.confirm(
-      `Czy na pewno chcesz usunąć wizytę psa "${appointment.dog_name}"?`,
+      `Are you sure you want to delete the appointment for the dog "${appointment.dog_name}"?`,
     );
 
     if (!confirmed) return false;
@@ -146,8 +146,8 @@ export function useAppointmentManager() {
     return runMutation(
       appointment.id,
       () => deleteAppointment(appointment.id),
-      "Wizyta została usunięta.",
-      "Nie udało się usunąć wizyty. Spróbuj ponownie.",
+      "Appointment deleted.",
+      "Unable to delete appointment. Please try again.",
       "deleting",
     );
   };

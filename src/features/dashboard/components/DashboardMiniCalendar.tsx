@@ -18,8 +18,8 @@ interface DashboardMiniCalendarProps {
   onMonthChange: (date: Date) => void;
 }
 
-// Polish weekday abbreviations displayed in the calendar header.
-const weekdays = ["Pn", "Wt", "Śr", "Cz", "Pt", "Sb", "Nd"];
+// Weekday abbreviations displayed in the calendar header.
+const weekdays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
 // Compares two Date values by calendar day rather than by time.
 function isSameDate(firstDate: Date, secondDate: Date): boolean {
@@ -39,7 +39,7 @@ export function DashboardMiniCalendar({
   onAddAppointment,
   onMonthChange,
 }: DashboardMiniCalendarProps) {
-  const monthLabel = new Intl.DateTimeFormat("pl-PL", {
+  const monthLabel = new Intl.DateTimeFormat("en-SE", {
     month: "long",
     year: "numeric",
   }).format(displayedMonth);
@@ -54,7 +54,7 @@ export function DashboardMiniCalendar({
     (appointment) => appointment.appointment_date === selectedDateKey,
   );
 
-  const selectedDateLabel = new Intl.DateTimeFormat("pl-PL", {
+  const selectedDateLabel = new Intl.DateTimeFormat("en-SE", {
     day: "numeric",
     month: "long",
   }).format(selectedDate);
@@ -105,7 +105,7 @@ export function DashboardMiniCalendar({
           className="dashboard-section__title"
           id="dashboard-mini-calendar-title"
         >
-          Kalendarz
+          Calendar
         </h2>
 
         <div className="dashboard-mini-calendar__navigation">
@@ -113,7 +113,7 @@ export function DashboardMiniCalendar({
             className="dashboard-mini-calendar__navigation-button"
             type="button"
             onClick={handlePreviousMonth}
-            aria-label="Poprzedni miesiąc"
+            aria-label="Previous month"
           >
             <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
               <path d="m15 18-6-6 6-6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -128,7 +128,7 @@ export function DashboardMiniCalendar({
             className="dashboard-mini-calendar__navigation-button"
             type="button"
             onClick={handleNextMonth}
-            aria-label="Następny miesiąc"
+            aria-label="Next month"
           >
             <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
               <path d="m9 18 6-6-6-6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -162,7 +162,7 @@ export function DashboardMiniCalendar({
               .filter(Boolean)
               .join(" ");
 
-            const dateLabel = new Intl.DateTimeFormat("pl-PL", {
+            const dateLabel = new Intl.DateTimeFormat("en-SE", {
               weekday: "long",
               day: "numeric",
               month: "long",
@@ -175,7 +175,7 @@ export function DashboardMiniCalendar({
                 type="button"
                 key={calendarDay.date.getTime()}
                 onClick={() => handleDateSelect(calendarDay.date)}
-                aria-label={`${dateLabel}${calendarDay.isToday ? ", dzisiaj" : ""}${hasAppointments ? ", są wizyty" : ""}${isSelected ? ", wybrano" : ""}`}
+                aria-label={`${dateLabel}${calendarDay.isToday ? ", today" : ""}${hasAppointments ? ", appointments" : ""}${isSelected ? ", selected" : ""}`}
                 aria-current={calendarDay.isToday ? "date" : undefined}
               >
                 <span className="dashboard-mini-calendar__day-number">
@@ -196,15 +196,15 @@ export function DashboardMiniCalendar({
       <div className="dashboard-mini-calendar__selected-date">
         <div>
           <p className="dashboard-mini-calendar__selected-label">
-            Wybrano
+            Selected
           </p>
           <p className="dashboard-mini-calendar__selected-date-title">
             {selectedDateLabel}
           </p>
           <p className="dashboard-mini-calendar__selected-count">
             {selectedDateAppointments.length === 0
-              ? "Brak wizyt"
-              : `${selectedDateAppointments.length} ${selectedDateAppointments.length === 1 ? "Wizyta" : selectedDateAppointments.length >= 2 && selectedDateAppointments.length <= 4 ? "Wizyty" : "Wizyt"}`}
+              ? "No appointments"
+              : `${selectedDateAppointments.length} ${selectedDateAppointments.length === 1 ? "Appointment" : selectedDateAppointments.length >= 2 && selectedDateAppointments.length <= 4 ? "Appointments" : "Appointments"}`}
           </p>
         </div>
 
@@ -213,7 +213,7 @@ export function DashboardMiniCalendar({
           type="button"
           onClick={() => onAddAppointment(selectedDateKey)}
         >
-          Dodaj wizytę
+          Add appointment
         </button>
       </div>
     </section>

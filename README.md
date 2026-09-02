@@ -1,6 +1,6 @@
-# SpaKalendar
+# DogCalendar
 
-SpaKalendar is a responsive appointment-management PWA for a dog groomer. The UI is primarily Polish and is designed around fast, simple daily appointment management.
+DogCalendar is a responsive appointment-management PWA for a dog groomer. The UI is primarily Polish and is designed around fast, simple daily appointment management.
 
 ## Current status
 

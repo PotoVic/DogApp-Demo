@@ -1,8 +1,8 @@
-# SpaKalendar — Vision
+# DogCalendar — Vision
 
 ## Product vision
 
-SpaKalendar should make everyday dog-grooming appointment management simpler than using a physical calendar.
+DogCalendar should make everyday dog-grooming appointment management simpler than using a physical calendar.
 
 The application should let the groomer:
 
@@ -18,7 +18,7 @@ The application should let the groomer:
 
 ## Current product direction
 
-Stage 09 adds Saved Dogs as reusable current information without turning SpaKalendar into a customer CRM.
+Stage 09 adds Saved Dogs as reusable current information without turning DogCalendar into a customer CRM.
 
 Saved Dog information:
 

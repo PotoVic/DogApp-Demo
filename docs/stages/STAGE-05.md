@@ -1,4 +1,4 @@
-# SpaKalendar — Stage 05: Dashboard
+# DogCalendar — Stage 05: Dashboard
 
 ## Purpose
 

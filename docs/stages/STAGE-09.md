@@ -1,4 +1,4 @@
-# SpaKalendar — Stage 09: Saved Dogs & Appointment History
+# DogCalendar — Stage 09: Saved Dogs & Appointment History
 
 ## Status
 

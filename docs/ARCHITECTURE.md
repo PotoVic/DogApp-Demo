@@ -1,4 +1,4 @@
-# SpaKalendar — Architecture
+# DogCalendar — Architecture
 
 ## Current architecture
 

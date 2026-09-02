@@ -1,8 +1,8 @@
-# SpaKalendar — AI Context
+# DogCalendar — AI Context
 
 ## Project
 
-SpaKalendar is a React + TypeScript + Vite appointment-management PWA for a dog groomer. The UI is primarily Polish.
+DogCalendar is a React + TypeScript + Vite appointment-management PWA for a dog groomer. The UI is primarily Polish.
 
 ## Current stage
 

@@ -1,8 +1,8 @@
-# SpaKalendar --- Stage 04: Calendar
+# DogCalendar --- Stage 04: Calendar
 
 ## Purpose
 
-Stage 04 implements the core monthly calendar experience of SpaKalendar.
+Stage 04 implements the core monthly calendar experience of DogCalendar.
 
 The goal is to build a simple, familiar, mobile-first calendar that sits
 on top of the appointment-management foundation completed in Stage 03.
