@@ -43,7 +43,7 @@ export function useAppointmentManager() {
       setLoadError(null);
       setAppointments(await getAppointments());
     } catch {
-      setLoadError("Unable to load appointments. Please try again.");
+      setLoadError("Failed to load appointments. Try again.");
     } finally {
       setIsLoading(false);
     }
@@ -98,7 +98,7 @@ export function useAppointmentManager() {
       await loadAppointments();
       return true;
     } catch {
-      setActionError("Unable to save appointment. Please try again.");
+      setActionError("Failed to save the appointment. Try again.");
       return false;
     } finally {
       setMutationType(null);
@@ -111,7 +111,7 @@ export function useAppointmentManager() {
       appointmentId,
       () => updateAppointment(appointmentId, data),
       "Appointment updated.",
-      "Unable to update appointment. Please try again.",
+      "Failed to update the appointment. Try again.",
       "saving",
     );
 
@@ -121,7 +121,7 @@ export function useAppointmentManager() {
       appointmentId,
       () => cancelAppointment(appointmentId),
       "Appointment cancelled.",
-      "Unable to cancel appointment. Please try again.",
+      "Failed to cancel the appointment. Try again.",
       "saving",
     );
 
@@ -131,14 +131,14 @@ export function useAppointmentManager() {
       appointmentId,
       () => completeAppointment(appointmentId),
       "Appointment marked as completed.",
-      "Unable to complete appointment. Please try again.",
+      "Failed to complete the appointment. Try again.",
       "saving",
     );
 
   // Confirms and deletes an appointment through the shared mutation pipeline.
   const remove = async (appointment: Appointment) => {
     const confirmed = window.confirm(
-      `Are you sure you want to delete the appointment for the dog "${appointment.dog_name}"?`,
+      `Are you sure you want to delete the appointment for dog "${appointment.dog_name}"?`,
     );
 
     if (!confirmed) return false;
@@ -147,7 +147,7 @@ export function useAppointmentManager() {
       appointment.id,
       () => deleteAppointment(appointment.id),
       "Appointment deleted.",
-      "Unable to delete appointment. Please try again.",
+      "Failed to delete the appointment. Try again.",
       "deleting",
     );
   };

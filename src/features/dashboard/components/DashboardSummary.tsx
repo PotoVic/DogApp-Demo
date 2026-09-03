@@ -45,17 +45,17 @@ export function DashboardSummary({
         </article>
 
         <article className="dashboard-summary__card">
-          <h3>Earnings this month</h3>
+          <h3>This month's earnings</h3>
           <p
-            aria-label={`Earnings this month: ${formatCurrency(monthlyEarnings)}`}
+            aria-label={`This month's earnings: ${formatCurrency(monthlyEarnings)}`}
           >
             {isLoading ? "—" : formatCurrency(monthlyEarnings)}
           </p>
         </article>
 
         <article className="dashboard-summary__card">
-          <h3>Number of appointments</h3>
-          <p aria-label={`Number of appointments this month: ${monthlyAppointmentCount}`}>
+          <h3>Appointment count</h3>
+          <p aria-label={`Appointment count this month: ${monthlyAppointmentCount}`}>
             {isLoading ? "—" : monthlyAppointmentCount}
           </p>
         </article>

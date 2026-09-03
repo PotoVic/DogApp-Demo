@@ -33,7 +33,7 @@ function getAppointmentStatusLabel(status: Appointment["status"]): string {
   }
 }
 
-// Formats the appointment count with English singular/plural wording.
+// Formats the appointment count in English.
 function formatAppointmentCount(count: number): string {
   if (count === 1) return "1 appointment";
   if (count >= 2 && count <= 4) return `${count} appointments`;
@@ -42,7 +42,7 @@ function formatAppointmentCount(count: number): string {
 
 // Formats the selected dashboard date for the section heading.
 function formatSelectedDate(date: Date): string {
-  const label = new Intl.DateTimeFormat("en-SE", {
+  const label = new Intl.DateTimeFormat("en-US", {
     day: "numeric",
     month: "long",
   }).format(date);

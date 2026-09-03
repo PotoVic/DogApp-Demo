@@ -11,6 +11,7 @@ import {
   type MouseEvent,
 } from "react";
 import { useSavedDogs } from "../../../hooks/useSavedDogs";
+import { syncAppointmentsFromSavedDog } from "../../../services/appointments/appointmentService";
 import type { SavedDog } from "../../../types/savedDog";
 import "./savedDogs.css";
 import closeIcon from "../../../assets/close-icon.svg";
@@ -40,8 +41,13 @@ const emptyForm: SavedDogFormState = {
   phone_number: "",
 };
 
+interface SavedDogsPanelProps {
+  // Lets the parent refresh its appointment state after a Saved Dog is edited.
+  onDogUpdated?: () => void;
+}
+
 // Saved-dog management UI for creating, editing, and deleting reusable dog profiles.
-export function SavedDogsPanel() {
+export function SavedDogsPanel({ onDogUpdated }: SavedDogsPanelProps) {
   const {
     savedDogs,
     isLoading,
@@ -180,7 +186,16 @@ export function SavedDogsPanel() {
 
     try {
       if (editingDogId) {
+        const previousDog = savedDogs.find((dog) => dog.id === editingDogId);
+
         await editSavedDog(editingDogId, input);
+
+        if (previousDog) {
+          // Keep appointment dog information aligned with the current Saved Dog.
+          // Appointment dates, times, prices, notes, and statuses are preserved.
+          await syncAppointmentsFromSavedDog(previousDog, input);
+          onDogUpdated?.();
+        }
       } else {
         await addSavedDog(input);
       }
@@ -192,8 +207,8 @@ export function SavedDogsPanel() {
     } catch {
       setFormError(
         editingDogId
-          ? "Unable to update dog. Please try again."
-          : "Unable to save dog. Please try again.",
+          ? "Failed to update dog. Try again."
+          : "Failed to save dog. Try again.",
       );
     } finally {
       setIsSubmitting(false);
@@ -203,7 +218,7 @@ export function SavedDogsPanel() {
   // Confirms and deletes a saved dog.
   const handleDelete = async (dog: SavedDog) => {
     const confirmed = window.confirm(
-      `Are you sure you want to delete "${dog.name}"?`,
+      `Are you sure you want to delete the dog "${dog.name}"?`,
     );
 
     if (!confirmed) return;
@@ -213,7 +228,7 @@ export function SavedDogsPanel() {
     try {
       await removeSavedDog(dog.id);
     } catch {
-      setFormError("Unable to delete dog. Please try again.");
+      setFormError("Failed to delete dog. Try again.");
     } finally {
       setDeletingDogId(null);
     }
@@ -226,7 +241,7 @@ export function SavedDogsPanel() {
           <div>
             <h2 id="saved-dogs-title">Saved dogs</h2>
             <p>
-              Save a dog's details once to quickly fill in future appointments.
+              Save a dog's details once to fill out future appointments faster.
             </p>
           </div>
         </div>
@@ -245,7 +260,7 @@ export function SavedDogsPanel() {
           <div>
             <h2 id="saved-dogs-title">Saved dogs</h2>
             <p>
-              Save a dog's details once to quickly fill in future appointments.
+              Save a dog's details once to fill out future appointments faster.
             </p>
           </div>
 
@@ -259,9 +274,9 @@ export function SavedDogsPanel() {
         </div>
 
         <div className="saved-dogs-panel__state" role="alert">
-          <p>Unable to load saved dogs.</p>
+          <p>Failed to load saved dogs.</p>
           <p className="saved-dogs-panel__error">
-            Please try again later.
+            Try again later.
           </p>
         </div>
       </section>
@@ -274,7 +289,7 @@ export function SavedDogsPanel() {
         <div>
           <h2 id="saved-dogs-title">Saved dogs</h2>
           <p>
-            Save a dog's details once to quickly fill in future appointments.
+            Save a dog's details once to fill out future appointments faster.
           </p>
         </div>
 
@@ -303,7 +318,7 @@ export function SavedDogsPanel() {
             <header className="saved-dog-modal__header">
               <div>
                 <p className="saved-dog-modal__eyebrow">
-                  {editingDogId ? "Manage dog" : "New dog"}
+                  {editingDogId ? "Dog management" : "New dog"}
                 </p>
 
                 <h2
@@ -428,11 +443,11 @@ export function SavedDogsPanel() {
 
       {!showForm && savedDogs.length === 0 && (
         <div className="saved-dogs-panel__empty">
-          <h3>You don't have any saved dogs yet</h3>
+          <h3>You do not have any saved dogs yet</h3>
 
           <p>
-            Add your first dog. Their details will be
-            available as a quick suggestion for future appointments.
+            Add your first dog. For future appointments, its details will be
+            available as a quick suggestion.
           </p>
 
           <button

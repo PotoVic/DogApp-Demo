@@ -12,7 +12,11 @@ import type { Appointment } from "../types/appointment";
 import type { AppointmentFormSubmitData } from "../features/appointments/components/AppointmentsForm";
 import "../features/appointments/components/appointments.css";
 import "./workspace-pages.css";
-import { findOrCreateSavedDog } from "../services/savedDogs/savedDogService";
+import {
+  findOrCreateSavedDog,
+  syncSavedDogFromAppointment,
+  syncSelectedSavedDog,
+} from "../services/savedDogs/savedDogService";
 
 type AppointmentsSection = "appointments" | "saved-dogs";
 
@@ -29,6 +33,9 @@ export default function AppointmentsPage() {
   // Stores the appointment currently being edited, or null for creation.
   const [editingAppointment, setEditingAppointment] =
     useState<Appointment | null>(null);
+  // Used only to prefill a new appointment from an existing appointment.
+  const [prefillAppointment, setPrefillAppointment] =
+    useState<Appointment | null>(null);
 
   // Closes the appointment form/modal and clears the current appointment being edited.
   const closeForm = () => {
@@ -36,6 +43,7 @@ export default function AppointmentsPage() {
 
     setShowForm(false);
     setEditingAppointment(null);
+    setPrefillAppointment(null);
   };
 
   // Creates or updates an appointment, then closes the form after a successful save.
@@ -51,17 +59,40 @@ export default function AppointmentsPage() {
       return;
     }
 
-    if (!editingAppointment && !selectedSavedDogId) {
-      try {
+    try {
+      if (editingAppointment) {
+        // Keep the reusable dog profile in sync with changes made while editing
+        // an appointment. The old appointment values are used to find the profile.
+        await syncSavedDogFromAppointment(
+          {
+            name: editingAppointment.dog_name,
+            breed: editingAppointment.breed ?? undefined,
+            phone_number: editingAppointment.phone_number ?? undefined,
+          },
+          {
+            name: appointment.dog_name,
+            breed: appointment.breed,
+            phone_number: appointment.phone_number,
+          },
+        );
+      } else if (selectedSavedDogId) {
+        // If the form started from a saved dog, keep that profile current when
+        // its details are changed before saving the new appointment.
+        await syncSelectedSavedDog(selectedSavedDogId, {
+          name: appointment.dog_name,
+          breed: appointment.breed,
+          phone_number: appointment.phone_number,
+        });
+      } else {
         await findOrCreateSavedDog({
           name: appointment.dog_name,
           breed: appointment.breed,
           phone_number: appointment.phone_number,
         });
-      } catch {
-        // The appointment has already been saved successfully.
-        // Saved Dog persistence should not make the appointment appear failed.
       }
+    } catch {
+      // The appointment has already been saved successfully.
+      // Saved Dog synchronization should not make the appointment appear failed.
     }
 
     closeForm();
@@ -72,7 +103,18 @@ export default function AppointmentsPage() {
     if (manager.mutationType) return;
 
     manager.clearFeedback();
+    setPrefillAppointment(null);
     setEditingAppointment(appointment);
+    setShowForm(true);
+  };
+
+  // Creates a new appointment using the previous visit only as defaults.
+  const handleNextVisit = (appointment: Appointment) => {
+    if (manager.mutationType) return;
+
+    manager.clearFeedback();
+    setEditingAppointment(null);
+    setPrefillAppointment(appointment);
     setShowForm(true);
   };
 
@@ -80,6 +122,7 @@ export default function AppointmentsPage() {
   const openNewAppointment = () => {
     manager.clearFeedback();
     setEditingAppointment(null);
+    setPrefillAppointment(null);
     setShowForm(true);
   };
 
@@ -148,6 +191,7 @@ export default function AppointmentsPage() {
       {activeSection === "appointments" ? (
         <AppointmentList
           onEdit={handleEdit}
+          onNextVisit={handleNextVisit}
           onCancel={(appointment) => void manager.cancel(appointment.id)}
           onComplete={(appointment) => void manager.complete(appointment.id)}
           onDelete={(appointment) => void manager.remove(appointment)}
@@ -160,7 +204,7 @@ export default function AppointmentsPage() {
           showTitle={false}
         />
       ) : (
-        <SavedDogsPanel />
+        <SavedDogsPanel onDogUpdated={() => void manager.reload()} />
       )}
 
       {manager.successMessage && (
@@ -182,6 +226,7 @@ export default function AppointmentsPage() {
       {showForm && (
         <AppointmentModal
           appointment={editingAppointment}
+          prefillAppointment={prefillAppointment}
           error={manager.actionError}
           isSubmitting={manager.mutationType === "saving"}
           onSubmit={handleSubmit}

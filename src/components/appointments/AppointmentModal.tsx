@@ -15,6 +15,7 @@ import "./appointment-modal.css";
 
 interface AppointmentModalProps {
   appointment?: Appointment | null;
+  prefillAppointment?: Appointment | null;
   initialDate?: string;
   error?: string | null;
   isSubmitting?: boolean;
@@ -25,6 +26,7 @@ interface AppointmentModalProps {
 // Reusable modal wrapper for creating or editing an appointment.
 export function AppointmentModal({
   appointment = null,
+  prefillAppointment = null,
   initialDate,
   error = null,
   isSubmitting = false,
@@ -105,7 +107,7 @@ export function AppointmentModal({
         <header className="appointment-modal__header">
           <div>
             <p className="appointment-modal__eyebrow">
-              {appointment ? "Manage appointment" : "New appointment"}
+              {appointment ? "Appointment management" : "New appointment"}
             </p>
             <h2
               className="appointment-modal__title"
@@ -145,8 +147,9 @@ export function AppointmentModal({
         )}
 
         <AppointmentForm
-          key={`${appointment?.id ?? "new"}-${initialDate ?? ""}`}
+          key={`${appointment?.id ?? "new"}-${prefillAppointment?.id ?? "none"}-${initialDate ?? ""}`}
           appointment={appointment ?? undefined}
+          prefillAppointment={prefillAppointment ?? undefined}
           initialDate={initialDate}
           onSubmit={onSubmit}
           onCancel={onClose}

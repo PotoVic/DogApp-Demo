@@ -29,11 +29,11 @@ export function PWAUpdatePrompt() {
   return (
     <aside
       className="pwa-update-prompt"
-      aria-label="App update"
+      aria-label="Aktualizacja aplikacji"
     >
       <div className="pwa-update-prompt__content">
         <p className="pwa-update-prompt__title">
-          A new version of DogCalendar is available.
+          A new version of SpaKalendar is available.
         </p>
 
         <p className="pwa-update-prompt__message">
@@ -55,7 +55,7 @@ export function PWAUpdatePrompt() {
           type="button"
           onClick={handleUpdate}
         >
-          Update
+          Aktualizuj
         </button>
       </div>
     </aside>

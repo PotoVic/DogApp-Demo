@@ -51,7 +51,7 @@ export default function AppShell() {
         <Link
           className="app-header__brand"
           to="/app"
-          aria-label="DogCalendar — Dashboard"
+          aria-label="SpaKalendar — Dashboard"
         >
           <img src={logo} alt="" width="48" height="48" />
         </Link>

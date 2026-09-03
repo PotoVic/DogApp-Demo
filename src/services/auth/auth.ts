@@ -2,7 +2,7 @@
  * Thin wrapper around Supabase authentication operations.
  */
 
-// Authentication service for DogCalendar.
+// Authentication service for SpaKalendar.
 // Provides a central interface for signing in, signing out,
 // checking the current session, and listening for auth state changes.
 import { supabase } from "../supabase/client"

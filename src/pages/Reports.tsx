@@ -10,7 +10,6 @@ import {
   getMonthlyAppointments,
   getMonthlyEarnings,
 } from "../utils/appointmentCalculations";
-import { formatCurrency } from "../utils/formatting";
 
 // Returns the current calendar month as the initial report selection.
 const getCurrentMonth = () => {
@@ -36,6 +35,13 @@ const MONTH_NAMES = [
   "November",
   "December",
 ];
+
+// Formats a numeric price using English number formatting with the Swedish krona suffix.
+const formatPrice = (price: number) =>
+  new Intl.NumberFormat("en-US", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(price) + " kr";
 
 // Builds the YYYY-MM key used to select appointments for a month.
 const getMonthKey = (year: number, month: number) =>
@@ -75,7 +81,7 @@ export default function Reports() {
           return;
         }
 
-        setAppointmentsError("Unable to load appointments. Please try again.");
+        setAppointmentsError("Failed to load appointments. Try again.");
       } finally {
         if (isMounted) {
           setIsLoadingAppointments(false);
@@ -125,11 +131,11 @@ export default function Reports() {
         <div className="reports-page__card">
           <div className="reports-page__card-header">
             <h2>Monthly report</h2>
-            <p>Select the month for which you want to generate a PDF report.</p>
+            <p>Choose the month for which you want to generate a PDF report.</p>
           </div>
 
           <div className="reports-page__month-selector">
-            <span className="reports-page__label">Select month</span>
+            <span className="reports-page__label">Choose month</span>
 
             <div className="reports-page__month-navigation">
               <button
@@ -222,7 +228,7 @@ export default function Reports() {
                               monthlyAppointments.length <= 4
                             ? "appointments"
                             : "appointments"
-                    } · ${formatCurrency(monthlyEarnings)}`}
+                    } · ${formatPrice(monthlyEarnings)}`}
               </p>
             </div>
           </div>

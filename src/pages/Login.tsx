@@ -42,7 +42,7 @@ export default function Login() {
     const { error } = await authService.signIn(email.trim(), password);
 
     if (error) {
-      setError("Unable to log in. Check your credentials.");
+      setError("Login failed. Check your credentials.");
     }
      
    
@@ -61,7 +61,7 @@ export default function Login() {
             height="56"
           />
           <h1 className="login-card__title" id="login-title">
-            DogCalendar
+            SpaKalendar
           </h1>
           <p className="login-card__description">
             Log in to continue.
@@ -71,7 +71,7 @@ export default function Login() {
         <form className="login-form" onSubmit={handleSubmit}>
           <div className="login-form__field">
             <label className="login-form__label" htmlFor="email">
-              Email address
+              Adres e-mail
             </label>
             <input
               id="email"

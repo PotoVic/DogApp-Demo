@@ -2,12 +2,10 @@
  * Shared display-formatting helpers.
  */
 
-// Formats a number as Swedish krona for the UI.
+// Formats a number using English number formatting with the Swedish krona suffix.
 export function formatCurrency(value: number): string {
-  return new Intl.NumberFormat("sv-SE", {
-    style: "currency",
-    currency: "SEK",
+  return new Intl.NumberFormat("en-US", {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
-  }).format(value);
+  }).format(value) + " kr";
 }

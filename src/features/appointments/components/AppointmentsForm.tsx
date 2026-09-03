@@ -2,7 +2,7 @@
  * Create/edit appointment form and validation.
  */
 
-import { useMemo, useState, type FormEvent } from "react";
+import { useMemo, useState, type FocusEvent, type FormEvent } from "react";
 import type {
   Appointment,
   AppointmentInput,
@@ -16,7 +16,7 @@ import "./appointments.css";
 // Maps appointment input fields to optional validation messages.
 type AppointmentFormErrors = Partial<Record<keyof AppointmentInput, string>>;
 
-// Date emitted by the appointment form after validation, including the optional Saved Dog profile ID.
+// Data emitted by the appointment form after validation, including the optional Saved Dog profile ID.
 export interface AppointmentFormSubmitData {
   appointment: AppointmentInput;
   selectedSavedDogId: string | null;
@@ -47,10 +47,61 @@ function formatPhoneNumber(value?: string | null): string {
   return hasLeadingPlus ? `+${normalizedValue}` : normalizedValue;
 }
 
+
+/**
+ * Keeps the focused field visible on small screens without scrolling the form
+ * unnecessarily. It also accounts for the sticky action bar and the mobile
+ * keyboard changing the available viewport after focus.
+ */
+function scrollFocusedFieldIntoView(
+  event: FocusEvent<HTMLElement>,
+): void {
+  const field = event.currentTarget;
+  const form = field.closest(".appointment-form");
+
+  if (!(form instanceof HTMLElement)) {
+    return;
+  }
+
+  const scrollIntoViewIfNeeded = () => {
+    const fieldRect = field.getBoundingClientRect();
+    const formRect = form.getBoundingClientRect();
+    const actions = form.querySelector(".appointment-form__actions");
+    const actionsRect =
+      actions instanceof HTMLElement ? actions.getBoundingClientRect() : null;
+
+    const topLimit = formRect.top + 12;
+    const bottomLimit = (actionsRect?.top ?? formRect.bottom) - 12;
+
+    let scrollBy = 0;
+
+    if (fieldRect.top < topLimit) {
+      scrollBy = fieldRect.top - topLimit;
+    } else if (fieldRect.bottom > bottomLimit) {
+      scrollBy = fieldRect.bottom - bottomLimit;
+    }
+
+    if (scrollBy === 0) {
+      return;
+    }
+
+    form.scrollBy({
+      top: scrollBy,
+      behavior: "smooth",
+    });
+  };
+
+  requestAnimationFrame(() => {
+    scrollIntoViewIfNeeded();
+    window.setTimeout(scrollIntoViewIfNeeded, 120);
+  });
+}
+
 interface AppointmentFormProps {
   onSubmit: (data: AppointmentFormSubmitData) => void;
   onCancel: () => void;
   appointment?: Appointment;
+  prefillAppointment?: Appointment;
   initialDate?: string;
   isSubmitting?: boolean;
 }
@@ -60,17 +111,25 @@ export function AppointmentForm({
   onSubmit,
   onCancel,
   appointment,
+  prefillAppointment,
   initialDate,
   isSubmitting = false,
 }: AppointmentFormProps) {
-  // Stores the appointment fields being edited.
+  // Existing appointment = edit mode. Prefill appointment = new next-visit defaults.
   const [formData, setFormData] = useState<AppointmentInput>({
-    dog_name: appointment?.dog_name ?? "",
-    breed: appointment?.breed ?? "",
-    phone_number: appointment?.phone_number ?? "",
-    appointment_date: appointment?.appointment_date ?? initialDate ?? "",
-    appointment_time: normalizeAppointmentTime(appointment?.appointment_time),
-    price: appointment?.price ?? 0,
+    dog_name: appointment?.dog_name ?? prefillAppointment?.dog_name ?? "",
+    breed: appointment?.breed ?? prefillAppointment?.breed ?? "",
+    phone_number:
+      appointment?.phone_number ?? prefillAppointment?.phone_number ?? "",
+    // The next visit must have a date selected by the user.
+    appointment_date:
+      appointment?.appointment_date ??
+      (prefillAppointment ? "" : initialDate ?? ""),
+    appointment_time: normalizeAppointmentTime(
+      appointment?.appointment_time ?? prefillAppointment?.appointment_time,
+    ),
+    price: appointment?.price ?? prefillAppointment?.price ?? 0,
+    // Notes belong to the individual appointment and are not copied.
     note: appointment?.note ?? "",
     status: appointment?.status ?? "scheduled",
   });
@@ -78,7 +137,9 @@ export function AppointmentForm({
   // Stores field-level validation messages.
   const [errors, setErrors] = useState<AppointmentFormErrors>({});
   // Keeps the price as a string so the input can temporarily be empty or partially edited.
-  const [priceInput, setPriceInput] = useState(String(appointment?.price ?? 0));
+  const [priceInput, setPriceInput] = useState(
+    String(appointment?.price ?? prefillAppointment?.price ?? 0),
+  );
 
   const {
     savedDogs,
@@ -104,21 +165,19 @@ export function AppointmentForm({
     )}`;
   });
 
-  // Filters saved dogs by the current dog-name search text.
+  // Filters saved dogs by the beginning of the dog's name.
+  // Typing "Bi" should show "Billy", but not "Tobi".
   const matchingSavedDogs = useMemo(() => {
-    const searchTerm = formData.dog_name.trim().toLocaleLowerCase("en-US");
+    const searchTerm = formData.dog_name.trim().toLocaleLowerCase("en");
 
     if (!searchTerm) {
       return [];
     }
 
     return savedDogs
-      .filter((dog) => {
-        const name = dog.name.toLocaleLowerCase("en-US");
-        const breed = dog.breed?.toLocaleLowerCase("en-US") ?? "";
-
-        return name.includes(searchTerm) || breed.includes(searchTerm);
-      })
+      .filter((dog) =>
+        dog.name.toLocaleLowerCase("en").startsWith(searchTerm),
+      )
       .slice(0, 5);
   }, [formData.dog_name, savedDogs]);
 
@@ -144,14 +203,14 @@ export function AppointmentForm({
     }
 
     if (!formData.appointment_date) {
-      newErrors.appointment_date = "Select an appointment date.";
+      newErrors.appointment_date = "Select the appointment date.";
     }
 
     if (!formData.appointment_time) {
-      newErrors.appointment_time = "Select an appointment time.";
+      newErrors.appointment_time = "Select the appointment time.";
     } else if (!timeOptions.includes(formData.appointment_time)) {
       newErrors.appointment_time =
-        "Appointment time must be selected in 5-minute intervals.";
+        "The appointment time must be selected in 5-minute intervals.";
     }
 
     const parsedPrice = Number(priceInput);
@@ -238,6 +297,7 @@ export function AppointmentForm({
           name="dog_name"
           type="text"
           value={formData.dog_name}
+          onFocus={scrollFocusedFieldIntoView}
           onChange={(event) => {
             setSelectedSavedDogId(null);
             setIsSavedDogSearchOpen(true);
@@ -294,7 +354,7 @@ export function AppointmentForm({
 
         {savedDogsError && (
           <p className="appointment-form__hint">
-            Unable to load saved dogs.
+            Failed to load saved dogs.
           </p>
         )}
 
@@ -316,6 +376,7 @@ export function AppointmentForm({
           name="breed"
           type="text"
           value={formData.breed}
+          onFocus={scrollFocusedFieldIntoView}
           onChange={(event) =>
             setFormData({
               ...formData,
@@ -347,7 +408,7 @@ export function AppointmentForm({
             autoComplete="tel"
             inputMode="tel"
             maxLength={30}
-            placeholder="e.g. +48 532 483 896"
+            placeholder="np. +48 532 483 896"
           />
         </div>
 
@@ -365,10 +426,12 @@ export function AppointmentForm({
             step="0.01"
             inputMode="decimal"
             value={priceInput}
-            onFocus={() => {
+            onFocus={(event) => {
               if (priceInput === "0") {
                 setPriceInput("");
               }
+
+              scrollFocusedFieldIntoView(event);
             }}
             onChange={(event) => {
               const value = event.target.value;
@@ -403,7 +466,8 @@ export function AppointmentForm({
             id="appointment_time"
             name="appointment_time"
             value={formData.appointment_time}
-            onChange={(event) =>
+            onFocus={scrollFocusedFieldIntoView}
+          onChange={(event) =>
               setFormData({
                 ...formData,
                 appointment_time: event.target.value,
@@ -412,7 +476,7 @@ export function AppointmentForm({
             required
             disabled={isSubmitting}
           >
-            <option value="">Select a time</option>
+            <option value="">Select time</option>
             {timeOptions.map((time) => (
               <option key={time} value={time}>
                 {time}
@@ -439,7 +503,8 @@ export function AppointmentForm({
               name="appointment_date"
               type="date"
               value={formData.appointment_date}
-              onChange={(event) =>
+              onFocus={scrollFocusedFieldIntoView}
+          onChange={(event) =>
                 setFormData({
                   ...formData,
                   appointment_date: event.target.value,
@@ -474,6 +539,7 @@ export function AppointmentForm({
           id="status"
           name="status"
           value={formData.status}
+          onFocus={scrollFocusedFieldIntoView}
           onChange={(event) =>
             setFormData({
               ...formData,
@@ -504,6 +570,7 @@ export function AppointmentForm({
           id="note"
           name="note"
           value={formData.note}
+          onFocus={scrollFocusedFieldIntoView}
           onChange={(event) =>
             setFormData({
               ...formData,

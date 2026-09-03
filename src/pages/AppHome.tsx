@@ -12,7 +12,11 @@ import { DashboardSummary } from "../features/dashboard/components/DashboardSumm
 import { useAppointmentManager } from "../hooks/useAppointmentManager";
 import type { Appointment } from "../types/appointment";
 import { formatCalendarDateKey } from "../utils/calendar";
-import { findOrCreateSavedDog } from "../services/savedDogs/savedDogService";
+import {
+  findOrCreateSavedDog,
+  syncSavedDogFromAppointment,
+  syncSelectedSavedDog,
+} from "../services/savedDogs/savedDogService";
 import "../features/appointments/components/appointments.css";
 import "../features/dashboard/dashboard.css";
 
@@ -86,17 +90,40 @@ export default function AppHome() {
 
     if (!saved) return;
 
-    if (!editingAppointment && !selectedSavedDogId) {
-      try {
+    try {
+      if (editingAppointment) {
+        // Keep the reusable dog profile in sync with changes made while editing
+        // an appointment. The original appointment values identify the profile.
+        await syncSavedDogFromAppointment(
+          {
+            name: editingAppointment.dog_name,
+            breed: editingAppointment.breed ?? undefined,
+            phone_number: editingAppointment.phone_number ?? undefined,
+          },
+          {
+            name: appointment.dog_name,
+            breed: appointment.breed,
+            phone_number: appointment.phone_number,
+          },
+        );
+      } else if (selectedSavedDogId) {
+        // Keep an explicitly selected saved dog current when its details are
+        // changed in the new appointment form.
+        await syncSelectedSavedDog(selectedSavedDogId, {
+          name: appointment.dog_name,
+          breed: appointment.breed,
+          phone_number: appointment.phone_number,
+        });
+      } else {
         await findOrCreateSavedDog({
           name: appointment.dog_name,
           breed: appointment.breed,
           phone_number: appointment.phone_number,
         });
-      } catch {
-        // The appointment was already saved successfully.
-        // Saved Dog persistence must not make the appointment appear failed.
       }
+    } catch {
+      // The appointment was already saved successfully.
+      // Saved Dog synchronization should not make the appointment appear failed.
     }
 
     closeAppointmentModal();
@@ -123,7 +150,7 @@ export default function AppHome() {
       <header className="dashboard-page__header">
         <h1>Dashboard</h1>
         <p>
-          Overview of today's appointments, calendar, and key information.
+          An overview of today's appointments, calendar, and key information.
         </p>
       </header>
 

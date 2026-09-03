@@ -7,7 +7,7 @@ import type { Appointment } from "../types/appointment";
 import regularFontUrl from "../assets/fonts/DejaVuSans-Latin.ttf?url";
 import boldFontUrl from "../assets/fonts/DejaVuSans-Bold-Latin.ttf?url";
 
-// English month names used in the generated report.
+// Month names used in the generated report.
 const MONTH_NAMES = [
   "January",
   "February",
@@ -59,14 +59,14 @@ const loadFonts = async () => {
     fontsPromise = Promise.all([
       fetch(regularFontUrl).then((response) => {
         if (!response.ok) {
-          throw new Error("Unable to load the PDF font.");
+          throw new Error("Failed to load the PDF font.");
         }
 
         return response.arrayBuffer();
       }),
       fetch(boldFontUrl).then((response) => {
         if (!response.ok) {
-          throw new Error("Unable to load the PDF font.");
+          throw new Error("Failed to load the PDF font.");
         }
 
         return response.arrayBuffer();
@@ -80,9 +80,9 @@ const loadFonts = async () => {
   return fontsPromise;
 };
 
-// Formats a report amount using Swedish decimal formatting without a currency symbol.
+// Formats a report amount without a currency symbol.
 const formatEarnings = (value: number) =>
-  new Intl.NumberFormat("sv-SE", {
+  new Intl.NumberFormat("en-US", {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   }).format(value);
@@ -241,7 +241,7 @@ export async function generateMonthlyReport({
   pdf.setTextColor(105, 105, 105);
   pdf.setFont("DejaVuSans", "normal");
   pdf.setFontSize(8);
-  pdf.text("Number of appointments", 15, summaryY);
+  pdf.text("Appointment count", 15, summaryY);
 
   pdf.setTextColor(45, 45, 45);
   pdf.setFont("DejaVuSans", "bold");

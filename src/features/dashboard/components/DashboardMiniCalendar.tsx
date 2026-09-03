@@ -18,7 +18,7 @@ interface DashboardMiniCalendarProps {
   onMonthChange: (date: Date) => void;
 }
 
-// Weekday abbreviations displayed in the calendar header.
+// English weekday abbreviations displayed in the calendar header.
 const weekdays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
 // Compares two Date values by calendar day rather than by time.
@@ -39,7 +39,7 @@ export function DashboardMiniCalendar({
   onAddAppointment,
   onMonthChange,
 }: DashboardMiniCalendarProps) {
-  const monthLabel = new Intl.DateTimeFormat("en-SE", {
+  const monthLabel = new Intl.DateTimeFormat("en-US", {
     month: "long",
     year: "numeric",
   }).format(displayedMonth);
@@ -54,7 +54,7 @@ export function DashboardMiniCalendar({
     (appointment) => appointment.appointment_date === selectedDateKey,
   );
 
-  const selectedDateLabel = new Intl.DateTimeFormat("en-SE", {
+  const selectedDateLabel = new Intl.DateTimeFormat("en-US", {
     day: "numeric",
     month: "long",
   }).format(selectedDate);
@@ -162,7 +162,7 @@ export function DashboardMiniCalendar({
               .filter(Boolean)
               .join(" ");
 
-            const dateLabel = new Intl.DateTimeFormat("en-SE", {
+            const dateLabel = new Intl.DateTimeFormat("en-US", {
               weekday: "long",
               day: "numeric",
               month: "long",
@@ -175,7 +175,7 @@ export function DashboardMiniCalendar({
                 type="button"
                 key={calendarDay.date.getTime()}
                 onClick={() => handleDateSelect(calendarDay.date)}
-                aria-label={`${dateLabel}${calendarDay.isToday ? ", today" : ""}${hasAppointments ? ", appointments" : ""}${isSelected ? ", selected" : ""}`}
+                aria-label={`${dateLabel}${calendarDay.isToday ? ", today" : ""}${hasAppointments ? ", has appointments" : ""}${isSelected ? ", selected" : ""}`}
                 aria-current={calendarDay.isToday ? "date" : undefined}
               >
                 <span className="dashboard-mini-calendar__day-number">

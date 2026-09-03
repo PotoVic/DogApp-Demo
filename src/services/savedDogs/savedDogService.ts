@@ -14,7 +14,7 @@ export type SavedDogInput = {
 
 // Normalizes optional saved-dog text before matching or storing it.
 const normalizeSavedDogValue = (value: string | null | undefined) =>
-  value?.trim().replace(/\s+/g, " ").toLocaleLowerCase("en-US") ?? "";
+  value?.trim().replace(/\s+/g, " ").toLocaleLowerCase("en") ?? "";
 
 // Normalizes a phone number to digits for reliable matching/storage.
 const normalizePhoneNumber = (value: string | null | undefined) =>
@@ -160,4 +160,96 @@ export const findOrCreateSavedDog = async (
   // Multiple identical name + breed records and no phone:
   // ambiguous, so don't guess.
   return null;
+};
+
+
+// Finds the saved-dog profile that most likely represents an existing appointment.
+// The historical appointment values are used for matching so changing the
+// appointment's name/breed/phone does not accidentally point the update at another dog.
+export const findSavedDogForAppointment = async (
+  appointment: Pick<SavedDogInput, "name" | "breed" | "phone_number">,
+): Promise<SavedDog | null> => {
+  const dogs = await getSavedDogs();
+
+  const normalizedName = normalizeSavedDogValue(appointment.name);
+  const normalizedBreed = normalizeSavedDogValue(appointment.breed);
+  const normalizedPhone = normalizePhoneNumber(appointment.phone_number);
+
+  if (!normalizedName) {
+    return null;
+  }
+
+  // Phone + name is the strongest available match because phone numbers can
+  // distinguish dogs with the same name.
+  if (normalizedPhone) {
+    const phoneMatches = dogs.filter(
+      (dog) =>
+        normalizeSavedDogValue(dog.name) === normalizedName &&
+        normalizePhoneNumber(dog.phone_number) === normalizedPhone,
+    );
+
+    if (phoneMatches.length === 1) {
+      return phoneMatches[0];
+    }
+
+    // Never guess when multiple profiles share the same name + phone.
+    if (phoneMatches.length > 1) {
+      return null;
+    }
+  }
+
+  // Name + breed is the normal fallback when no phone number is available.
+  const nameAndBreedMatches = dogs.filter(
+    (dog) =>
+      normalizeSavedDogValue(dog.name) === normalizedName &&
+      normalizeSavedDogValue(dog.breed) === normalizedBreed,
+  );
+
+  if (nameAndBreedMatches.length === 1) {
+    return nameAndBreedMatches[0];
+  }
+
+  // If the old appointment did not contain a breed, a unique name match is
+  // useful because the saved dog may already have a newly added breed.
+  if (!normalizedBreed) {
+    const nameMatches = dogs.filter(
+      (dog) => normalizeSavedDogValue(dog.name) === normalizedName,
+    );
+
+    if (nameMatches.length === 1) {
+      return nameMatches[0];
+    }
+  }
+
+  return null;
+};
+
+// Synchronizes the reusable saved-dog profile with the latest appointment data.
+// Appointment history remains independent; this only updates the current dog profile.
+export const syncSavedDogFromAppointment = async (
+  previousAppointment: Pick<
+    SavedDogInput,
+    "name" | "breed" | "phone_number"
+  >,
+  updatedAppointment: Pick<SavedDogInput, "name" | "breed" | "phone_number">,
+): Promise<SavedDog | null> => {
+  const savedDog = await findSavedDogForAppointment(previousAppointment);
+
+  if (!savedDog) {
+    return null;
+  }
+
+  return updateSavedDog(savedDog.id, {
+    name: updatedAppointment.name,
+    breed: updatedAppointment.breed,
+    phone_number: updatedAppointment.phone_number,
+  });
+};
+
+// Updates an explicitly selected saved dog when its appointment form values change.
+export const syncSelectedSavedDog = async (
+  savedDogId: string,
+  input: SavedDogInput,
+): Promise<SavedDog> => {
+  return updateSavedDog(savedDogId, input);
 };
