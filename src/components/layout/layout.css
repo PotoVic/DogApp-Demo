@@ -164,7 +164,19 @@
   display: none;
 }
 
+.app-mobile-navigation a {
+  -webkit-tap-highlight-color: transparent;
+}
 
+.app-mobile-navigation a:active {
+  color: inherit;
+  background: transparent;
+}
+.app-mobile-navigation a img {
+  -webkit-user-drag: none;
+  user-select: none;
+  pointer-events: none;
+}
 @media (max-width: 1024px) {
   .app-header{
 
