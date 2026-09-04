@@ -92,3 +92,24 @@
     padding: var(--spacing-xl);
   }
 }
+
+
+.login-form__divider {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.login-form__divider::before,
+.login-form__divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--color-border);
+}
+
+.login-form__guest {
+  width: 100%;
+}
