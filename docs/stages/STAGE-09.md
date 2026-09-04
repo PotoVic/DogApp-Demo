@@ -53,8 +53,8 @@ Reduce repetitive appointment entry for returning dogs while preserving appointm
 
 ### Data integrity
 
-- [x] Historical appointments remain unchanged after Saved Dog edits.
-- [x] Appointment phone numbers are stored on the appointment itself and are not dependent on the Saved Dog record.
+- [x] Saved Dog edits can synchronize matching appointment information by deliberate product behavior.
+- [x] Appointment phone numbers are stored on the appointment itself and can be synchronized when the corresponding Saved Dog is edited.
 - [x] Deleting a Saved Dog does not delete appointments.
 - [x] Appointments remain the historical source of truth.
 
@@ -62,6 +62,7 @@ Reduce repetitive appointment entry for returning dogs while preserving appointm
 
 - [x] Saved Dog RLS enabled.
 - [x] SELECT ownership verified.
+- [x] Appointment and Saved Dog cross-user read isolation verified during the 2026-09-04 security review.
 - [x] INSERT ownership verified.
 - [x] UPDATE ownership verified.
 - [x] DELETE ownership verified.
@@ -105,7 +106,7 @@ Run the project's final lint/build commands before release if not already done i
 
 ## Definition of Done
 
-Stage 09 is complete because the agreed Saved Dogs functionality, appointment integration, data-integrity rules, responsive/accessibility behavior, and cross-user RLS behavior have been implemented and verified.
+Stage 09 is complete because the agreed Saved Dogs functionality, appointment integration, synchronization behavior, data-integrity rules, responsive/accessibility behavior, and cross-user RLS behavior have been implemented and verified.
 
 ## Post-Stage 09 maintainability refactor
 
@@ -135,4 +136,4 @@ Completed:
 This refactor is considered maintenance work after Stage 09 and does not add
 new product scope.
 
-**Last Updated:** 2026-09-02
+**Last Updated:** 2026-09-04

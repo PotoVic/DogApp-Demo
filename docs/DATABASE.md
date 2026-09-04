@@ -46,13 +46,11 @@ appointments.phone_number
 ...
 ```
 
-Later Saved Dog edits do not rewrite the appointment.
-
-Deleting a Saved Dog does not delete appointments.
+Saved Dog edits may synchronize matching appointment information by design. Deleting a Saved Dog does not delete appointments.
 
 ## Phone number
 
-`phone_number` is optional on both Saved Dogs and appointments. An appointment stores the phone number used at the time of the appointment as a historical snapshot. Editing a Saved Dog later does not change an existing appointment.
+`phone_number` is optional on both Saved Dogs and appointments. An appointment stores the phone number used at the time of the appointment as a historical snapshot. The current application intentionally supports Saved Dog synchronization: editing a Saved Dog can update matching appointment records in the current workflow. RLS still applies to those appointment updates.
 
 The UI presents Polish nine-digit numbers as:
 
@@ -75,10 +73,16 @@ Saved Dogs require RLS for:
 
 The policies must restrict access to the authenticated user's `user_id` and prevent ownership reassignment.
 
-Stage 09 RLS behavior has been tested with separate users and other users' Saved Dogs are not visible.
+Stage 09 RLS behavior has been tested with separate users and other users' Saved Dogs are not visible. The broader 2026-09-04 security review also verified appointment and Saved Dog cross-user read isolation.
+
+## Database constraints verified
+
+The current `appointments` table enforces: `user_id` NOT NULL, `dog_name` NOT NULL, required date/time fields, non-negative `price`, and an allowed `status` set. `user_id` references `auth.users(id)`.
+
+The current `saved_dogs` table enforces required identity/ownership/name/timestamp fields and references `auth.users(id)` through `user_id`.
 
 ## Future work
 
 No search/filter database changes are required for the completed Stage 09 scope.
 
-**Last Updated:** 2026-09-02
+**Last Updated:** 2026-09-04

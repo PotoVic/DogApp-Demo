@@ -26,7 +26,7 @@ Saved Dog information:
 - Breed.
 - Optional phone number.
 
-Appointments remain independent historical records.
+Appointments remain the operational source of appointment history. Saved Dog edits may synchronize matching appointment information by deliberate product behavior; deleting a Saved Dog does not delete appointments.
 
 ## Navigation direction
 
@@ -56,4 +56,4 @@ As the codebase grows:
 
 Search/filtering for historical Wizyty was considered but is not part of the completed Stage 09 scope. Future scope should be based on actual user needs rather than adding complexity preemptively.
 
-**Last Updated:** 2026-09-02
+**Last Updated:** 2026-09-04

@@ -120,7 +120,7 @@ Shared presentation formatting is kept in:
 src/utils/formatting.ts
 ```
 
-Current shared formatting includes Polish PLN currency formatting.
+Current shared formatting includes the project currency display/formatting used by the current demo.
 
 Date/calendar-specific helpers remain in `src/utils/calendar.ts`.
 
@@ -187,9 +187,9 @@ appointments
 Saved Dog management is intentionally separate from historical appointment
 records.
 
-Editing a Saved Dog must not update historical appointments.
+Editing a Saved Dog may update matching appointments by deliberate product behavior for the current workflow. The synchronization remains subject to appointment RLS.
 
-Deleting a Saved Dog must not delete historical appointments.
+Deleting a Saved Dog must not delete appointments.
 
 ## Saved Dog identity
 
@@ -198,6 +198,10 @@ The Saved Dog database `id` is the identity.
 Dog name is not unique.
 
 `user_id` establishes ownership.
+
+## Security hardening
+
+The browser-facing deployment uses Vercel security headers for MIME sniffing, framing, referrer policy, and unused browser permissions. PostgreSQL RLS remains the authorization boundary. The `rls_auto_enable()` security-definer function is restricted from direct execution by `anon` and `authenticated`.
 
 ## PWA
 
@@ -231,4 +235,4 @@ hooks should have a coherent responsibility.
 Wizyty search/filtering is not part of the completed Stage 09 architecture.
 No search/filter subsystem was introduced.
 
-**Last Updated:** 2026-09-02
+**Last Updated:** 2026-09-04

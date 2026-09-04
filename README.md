@@ -31,8 +31,10 @@ Implemented:
 - Internal `Wizyty / Zapisane psy` navigation.
 - Responsive Saved Dogs UI.
 - Accessible Saved Dog edit/close controls.
-- Historical appointments remain independent of Saved Dog edits/deletions.
+- Saved Dog edits may synchronize matching appointment information by deliberate product behavior.
+- Deleting a Saved Dog does not delete appointments.
 - Saved Dog RLS verified with multiple users.
+- Appointment and Saved Dog cross-user read isolation verified.
 
 ### Deliberate scope decision
 
@@ -73,7 +75,7 @@ Saved Dogs are intentionally not a fourth primary navigation item.
 
 Appointments remain the historical source of truth.
 
-Saved Dogs are reusable current profile/contact information. Editing or deleting a Saved Dog must never rewrite or delete historical appointments.
+Saved Dogs are reusable current profile/contact information. Editing a Saved Dog may synchronize matching appointment information by design. Deleting a Saved Dog must never delete appointments.
 
 ## Security
 
@@ -92,7 +94,7 @@ npm run build
 
 where configured.
 
-**Last Updated:** 2026-09-02
+**Last Updated:** 2026-09-04
 
 
 ## Current code architecture
@@ -147,4 +149,4 @@ component responsibilities, domain types, and important state/mutation
 behavior. Comments are intentionally focused on intent and responsibility
 rather than documenting every obvious line of JSX or CSS.
 
-**Last Updated:** 2026-09-02
+**Last Updated:** 2026-09-04

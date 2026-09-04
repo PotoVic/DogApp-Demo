@@ -60,17 +60,17 @@ Appointments are historical records.
 - Polish phone formatting (`323 232 232`).
 - Saved Dog management inside `Wizyty`.
 - Responsive and accessible management UI.
-- Historical appointment independence.
 - Saved Dog RLS verified with separate users.
+- Cross-user appointment/Saved Dog read isolation verified.
 
 ## Important rules
 
 1. Never use dog name as Saved Dog identity.
 2. Never duplicate a Saved Dog for every appointment.
 3. Appointment phone numbers belong to the appointment record once the appointment is saved.
-4. Never rewrite historical appointments when a Saved Dog changes.
+4. Saved Dog edits may synchronize matching appointment information by deliberate product behavior.
 5. Never delete appointments when a Saved Dog is deleted.
-6. RLS remains authoritative.
+6. RLS remains authoritative for every appointment/Saved Dog mutation.
 7. Reuse existing services/hooks/types.
 8. Keep mobile as the primary experience.
 9. Keep user-facing UI text Polish.
@@ -92,6 +92,10 @@ Do not implement the previously planned:
 - Mobile filter UI.
 
 These can be considered as a separate future feature if needed.
+
+## Security hardening verification
+
+The 2026-09-04 security review verified appointment and Saved Dog RLS policies, cross-user read isolation, database integrity constraints, the `rls_auto_enable()` security-definer configuration, restricted function execution permissions, and deployed Vercel security headers.
 
 ## Stage 09 verification
 
@@ -156,4 +160,4 @@ Wizyty search/filtering remains intentionally out of scope.
 Next development should be defined as a new stage rather than silently
 expanding Stage 09.
 
-**Last Updated:** 2026-09-02
+**Last Updated:** 2026-09-04

@@ -18,7 +18,7 @@
 
 ### Goal
 
-Reduce repetitive appointment entry for returning dogs while keeping appointment history independent and secure.
+Reduce repetitive appointment entry for returning dogs while keeping appointment data protected by authenticated ownership and RLS.
 
 ### Completed
 
@@ -36,8 +36,9 @@ Reduce repetitive appointment entry for returning dogs while keeping appointment
 - Three-item mobile primary navigation preserved.
 - Responsive Saved Dog UI.
 - Accessible edit/close interaction.
-- Historical appointment independence verified.
+- Saved Dog synchronization behavior verified as an intentional product rule.
 - Saved Dog RLS verified across users.
+- Cross-user appointment/Saved Dog isolation verified during the 2026-09-04 security review.
 
 ### Scope decision
 
@@ -79,7 +80,8 @@ These can be reconsidered as a separate future enhancement if real usage shows a
 
 ### Data integrity
 
-- [x] Historical appointments remain unchanged after Saved Dog edits.
+- [x] Saved Dog edits may synchronize matching appointment information by deliberate product behavior.
+- [x] Deleting a Saved Dog does not delete appointments.
 - [x] Deleting a Saved Dog does not delete appointments.
 - [x] Appointments remain the source of truth.
 
@@ -147,4 +149,4 @@ be expressed as standalone functions.
 
 Avoid duplicating feature behavior between pages.
 
-**Last Updated:** 2026-09-02
+**Last Updated:** 2026-09-04
