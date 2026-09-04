@@ -33,7 +33,7 @@ export function PWAUpdatePrompt() {
     >
       <div className="pwa-update-prompt__content">
         <p className="pwa-update-prompt__title">
-          A new version of SpaKalendar is available.
+          A new version of DogCalendar is available.
         </p>
 
         <p className="pwa-update-prompt__message">
