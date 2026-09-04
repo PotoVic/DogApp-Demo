@@ -29,7 +29,7 @@ export function PWAUpdatePrompt() {
   return (
     <aside
       className="pwa-update-prompt"
-      aria-label="Aktualizacja aplikacji"
+      aria-label="Update available"
     >
       <div className="pwa-update-prompt__content">
         <p className="pwa-update-prompt__title">
@@ -55,7 +55,7 @@ export function PWAUpdatePrompt() {
           type="button"
           onClick={handleUpdate}
         >
-          Aktualizuj
+          Update
         </button>
       </div>
     </aside>
