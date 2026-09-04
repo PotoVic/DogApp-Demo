@@ -2,7 +2,7 @@
  * Authentication page and login form.
  */
 
-import { type FormEvent, useEffect, useState } from "react";
+import { type FormEvent, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { authService } from "../services/auth/auth";
 import { cleanupCurrentGuestData, seedGuestDemoData } from "../services/auth/guest";
@@ -20,9 +20,11 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const [guestLoading, setGuestLoading] = useState(false);
   const [error, setError] = useState("");
+  // Prevent the auth-state effect from navigating before guest demo data has been seeded.
+  const guestStartingRef = useRef(false);
 
   useEffect(() => {
-    if (!authLoading && user) {
+    if (!authLoading && user && !guestStartingRef.current) {
       navigate("/app", { replace: true });
     }
   }, [authLoading, user, navigate]);
@@ -30,10 +32,12 @@ export default function Login() {
   const handleGuestLogin = async () => {
     setError("");
     setGuestLoading(true);
+    guestStartingRef.current = true;
 
     const { data, error } = await authService.signInAsGuest();
 
     if (error || !data.user) {
+      guestStartingRef.current = false;
       setError("Guest access is currently unavailable. Please try again.");
       setGuestLoading(false);
       return;
@@ -44,10 +48,16 @@ export default function Login() {
     } catch {
       await cleanupCurrentGuestData(data.user.id).catch(() => undefined);
       await authService.signOut();
+      guestStartingRef.current = false;
       setError("The demo could not be started. Please try again.");
+      setGuestLoading(false);
+      return;
     }
 
+    // Navigate only after the guest data exists, so the dashboard loads the seeded appointments.
+    guestStartingRef.current = false;
     setGuestLoading(false);
+    navigate("/app", { replace: true });
   };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
