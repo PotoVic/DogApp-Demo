@@ -9,7 +9,7 @@
 | Stage 03 — Appointments | Complete |
 | Stage 04 — Calendar | Complete |
 | Stage 05 — Dashboard | Complete |
-| Stage 06 — UI/UX Polish | Complete |
+| Stage 06 — UI/UX Refinement | Complete |
 | Stage 07 — PWA | Complete |
 | Stage 08 — Monthly PDF Reports | Complete |
 | Stage 09 — Saved Dogs & Appointment History | **Complete** |
@@ -30,9 +30,9 @@ Reduce repetitive appointment entry for returning dogs while keeping appointment
 - Automatic Saved Dog creation/reuse.
 - Duplicate Saved Dogs avoided through the existing matching logic.
 - Name, breed, optional phone number.
-- Polish phone formatting (`323 232 232`).
-- Saved Dog management inside `Wizyty`.
-- Internal `Wizyty / Zapisane psy` switch.
+- English-demo phone formatting (`123 456 789`).
+- Saved Dog management inside `Appointments`.
+- Internal `Appointments / Saved Dogs` switch.
 - Three-item mobile primary navigation preserved.
 - Responsive Saved Dog UI.
 - Accessible edit/close interaction.
@@ -42,7 +42,7 @@ Reduce repetitive appointment entry for returning dogs while keeping appointment
 
 ### Scope decision
 
-The previously planned Wizyty search/filter package is **not being implemented** in Stage 09.
+The previously planned Appointments search/filter package is **not being implemented** in Stage 09.
 
 Removed from the roadmap:
 

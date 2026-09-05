@@ -177,7 +177,7 @@ technical dependency is required:
 -   Advanced filtering/search.
 -   SaaS functionality.
 -   Advanced analytics.
--   Full UI/UX visual polish.
+-   Full UI/UX visual refinement.
 -   New appointment business rules.
 
 Stage 04 should establish the calendar foundation without prematurely
@@ -360,7 +360,7 @@ The calendar should:
 Example:
 
 ``` text
-Pon  Wt  Śr  Czw  Pt  Sob  Nd
+Mon  Tue  Wed  Thu  Fri  Sat  Sun
 ──────────────────────────────
  27  28  29  30   31   1    2
   3   4   5   6    7   8    9
@@ -394,14 +394,14 @@ The calendar should clearly display the currently viewed month.
 Example:
 
 ``` text
-<  Sierpień 2026  >
+<  August 2026  >
 ```
 
 The month label should update when navigating between months.
 
-The calendar should use the application's Polish UI language.
+The calendar should use the application's English UI language.
 
-Month names should be presented naturally for Polish users.
+Month names should be presented naturally for English-speaking users.
 
 Do not hard-code a single month.
 
@@ -603,18 +603,18 @@ practical.
 The selected-date area should show useful information such as:
 
 ``` text
-18 sierpnia
+August 18
 
 13:30
 Luna
 Shih Tzu
-150 zł
+150 kr
 scheduled
 
 15:00
 Bella
-Pudel
-180 zł
+Poodle
+180 kr
 completed
 ```
 
@@ -698,7 +698,7 @@ Loading feedback should follow the existing UI/UX principles.
 Example:
 
 ``` text
-Ładowanie wizyt...
+Loading appointments...
 ```
 
 The calendar should not appear frozen while appointment data is loading.
@@ -727,9 +727,9 @@ Provide a useful empty state.
 Example:
 
 ``` text
-Brak wizyt tego dnia.
+No appointments on this day.
 
-[ Dodaj wizytę ]
+[ Add appointment ]
 ```
 
 The user should understand that the date simply has no appointments.
@@ -755,8 +755,8 @@ Calendar-related data errors should be communicated clearly.
 Example:
 
 ``` text
-Nie udało się pobrać wizyt.
-Spróbuj ponownie.
+Failed to load appointments.
+Try again.
 ```
 
 Avoid exposing raw Supabase or PostgreSQL errors.

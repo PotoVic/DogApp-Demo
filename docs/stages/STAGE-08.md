@@ -25,16 +25,16 @@ The report is generated from the authenticated appointment data already used by 
 Implemented:
 
 - Dedicated Reports route.
-- Polish monthly report UI.
+- English monthly report UI.
 - Custom month selection/navigation.
 - Monthly appointment count.
 - Monthly earnings.
 - Client-side PDF generation with jsPDF.
 - A4 portrait format.
-- Embedded DejaVu Sans fonts for Polish characters.
+- Embedded DejaVu Sans fonts for extended Latin characters.
 - Minimal print-oriented PDF header.
 - Appointment table.
-- Polish date, price, and status formatting.
+- English date, price, and status formatting.
 - Sorting by appointment date and time.
 - Automatic A4 pagination.
 - Repeated table headers on new pages.
@@ -130,7 +130,7 @@ The generated PDF is stored/downloaded on the user's device rather than persiste
 Verified:
 
 - Normal monthly report generation.
-- Polish characters.
+- Extended Latin characters.
 - Correct monthly count and earnings.
 - Date/time ordering.
 - Multiple A4 pages.

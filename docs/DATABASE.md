@@ -52,7 +52,7 @@ Saved Dog edits may synchronize matching appointment information by design. Dele
 
 `phone_number` is optional on both Saved Dogs and appointments. An appointment stores the phone number used at the time of the appointment as a historical snapshot. The current application intentionally supports Saved Dog synchronization: editing a Saved Dog can update matching appointment records in the current workflow. RLS still applies to those appointment updates.
 
-The UI presents Polish nine-digit numbers as:
+The UI presents nine-digit phone numbers as:
 
 ```text
 323232232

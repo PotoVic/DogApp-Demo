@@ -688,11 +688,11 @@ Prefer clear messages appropriate for the user.
 Examples:
 
 ```text
-Nie udało się zalogować.
-Sprawdź dane logowania i spróbuj ponownie.
+Failed to sign in.
+Check your login details and try again.
 ```
 
-The exact Polish wording can be refined during implementation.
+The exact English wording can be refined during implementation.
 
 Loading and error states should follow the UI/UX documentation.
 

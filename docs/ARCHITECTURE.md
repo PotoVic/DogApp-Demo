@@ -140,17 +140,17 @@ components and hooks.
 Primary navigation:
 
 ```text
-Pulpit
-Wizyty
-Raporty
+Dashboard
+Appointments
+Reports
 ```
 
-The existing `Wizyty` area contains:
+The existing `Appointments` area contains:
 
 ```text
-Wizyty
-├── Wizyty
-└── Zapisane psy
+Appointments
+├── Appointments
+└── Saved Dogs
 ```
 
 This avoids adding a fourth mobile bottom-navigation item.
@@ -232,7 +232,7 @@ hooks should have a coherent responsibility.
 
 ## Stage 09 scope decision
 
-Wizyty search/filtering is not part of the completed Stage 09 architecture.
+Appointments search/filtering is not part of the completed Stage 09 architecture.
 No search/filter subsystem was introduced.
 
 **Last Updated:** 2026-09-04

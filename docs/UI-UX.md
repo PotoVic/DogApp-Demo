@@ -3,30 +3,30 @@
 ## Primary navigation
 
 ```text
-Pulpit
-Wizyty
-Raporty
+Dashboard
+Appointments
+Reports
 ```
 
 Mobile uses three bottom-navigation items.
 
-Saved Dogs are accessed inside `Wizyty` rather than as a fourth navigation item.
+Saved Dogs are accessed inside `Appointments` rather than as a fourth navigation item.
 
-## Wizyty
+## Appointments
 
 The page contains an internal switch:
 
 ```text
-Wizyty | Zapisane psy
+Appointments | Saved Dogs
 ```
 
-The `Dodaj wizytę` action sits below this internal navigation so the hierarchy remains clean on desktop and mobile.
+The `Add appointment` action sits below this internal navigation so the hierarchy remains clean on desktop and mobile.
 
-## Zapisane psy
+## Saved Dogs
 
 The Saved Dogs section explains its purpose:
 
-> Zapisz dane psa raz, aby szybciej uzupełniać kolejne wizyty.
+> Save a dog's details once to make future appointments faster to complete.
 
 It supports:
 
@@ -59,7 +59,7 @@ Suggestions present useful identifying information without requiring a separate 
 
 ## Phone number
 
-Polish nine-digit numbers are displayed/grouped as:
+Nine-digit phone numbers are displayed/grouped as:
 
 ```text
 323 232 232
@@ -126,6 +126,6 @@ large route components from owning unrelated presentation responsibilities.
 
 ## Scope decision
 
-Wizyty search/filter UI is not part of the completed Stage 09 UX. It was intentionally removed from scope rather than left as an unfinished requirement.
+Appointments search/filter UI is not part of the completed Stage 09 UX. It was intentionally removed from scope rather than left as an unfinished requirement.
 
 **Last Updated:** 2026-09-02

@@ -1,4 +1,4 @@
-# DogCalendar — Stage 06: UI/UX Polish
+# DogCalendar — Stage 06: UI/UX Refinement
 
 ## Status
 
@@ -26,7 +26,7 @@ It was a refinement stage and did not introduce future-stage functionality.
 ### Feedback and states
 - Audited loading, empty, error, success, and disabled states.
 - Mutation loading feedback is shown in active buttons.
-- Wizyty and Dashboard recovery/error behavior was refined.
+- Appointments and Dashboard recovery/error behavior was refined.
 - Existing Toast feedback system was preserved.
 
 ### Responsive refinement

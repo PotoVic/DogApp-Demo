@@ -1,6 +1,6 @@
 # DogCalendar
 
-DogCalendar is a responsive appointment-management PWA for a dog groomer. The UI is primarily Polish and is designed around fast, simple daily appointment management.
+DogCalendar is a responsive appointment-management PWA for a dog groomer. The demo UI is in English and is designed around fast, simple daily appointment management.
 
 ## Current status
 
@@ -9,7 +9,7 @@ DogCalendar is a responsive appointment-management PWA for a dog groomer. The UI
 - Stage 03 — Appointments: Complete
 - Stage 04 — Calendar: Complete
 - Stage 05 — Dashboard: Complete
-- Stage 06 — UI/UX Polish: Complete
+- Stage 06 — UI/UX Refinement: Complete
 - Stage 07 — PWA: Complete
 - Stage 08 — Monthly PDF Reports: Complete
 - Stage 09 — Saved Dogs & Appointment History: **Complete**
@@ -26,9 +26,9 @@ Implemented:
 - Saved Dog selection from the appointment form.
 - Automatic reuse/creation without an extra confirmation step.
 - Name, breed, and optional phone number.
-- Polish phone formatting such as `323 232 232`.
-- Saved Dog management inside the existing `Wizyty` area.
-- Internal `Wizyty / Zapisane psy` navigation.
+- Demo phone formatting such as `123 456 789`.
+- Saved Dog management inside the existing `Appointments` area.
+- Internal `Appointments / Saved Dogs` navigation.
 - Responsive Saved Dogs UI.
 - Accessible Saved Dog edit/close controls.
 - Saved Dog edits may synchronize matching appointment information by deliberate product behavior.
@@ -38,22 +38,22 @@ Implemented:
 
 ### Deliberate scope decision
 
-Wizyty search/filtering is **not part of the final Stage 09 scope**. Dog-name search, breed search, year/month/status filters, result counts, and mobile filter UI were evaluated as optional future work and removed from the Stage 09 definition of done.
+Appointments search/filtering is **not part of the final Stage 09 scope**. Dog-name search, breed search, year/month/status filters, result counts, and mobile filter UI were evaluated as optional future work and removed from the Stage 09 definition of done.
 
 ## Primary navigation
 
 ```text
-Pulpit
-Wizyty
-Raporty
+Dashboard
+Appointments
+Reports
 ```
 
 Mobile keeps three bottom-navigation items.
 
-Inside `Wizyty`:
+Inside `Appointments`:
 
 ```text
-Wizyty | Zapisane psy
+Appointments | Saved Dogs
 ```
 
 Saved Dogs are intentionally not a fourth primary navigation item.
@@ -119,7 +119,7 @@ Supabase
 ```
 
 `useAppointmentManager` is the shared appointment state/mutation layer used by
-the Dashboard and the `Wizyty` workspace.
+the Dashboard and the `Appointments` workspace.
 
 Pure appointment calculations live in:
 

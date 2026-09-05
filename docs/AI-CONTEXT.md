@@ -2,7 +2,7 @@
 
 ## Project
 
-DogCalendar is a React + TypeScript + Vite appointment-management PWA for a dog groomer. The UI is primarily Polish.
+DogCalendar is a React + TypeScript + Vite appointment-management PWA for a dog groomer. The UI is primarily English.
 
 ## Current stage
 
@@ -13,15 +13,15 @@ Stages 01–08 are complete.
 ## Current navigation
 
 ```text
-Pulpit
-Wizyty
-Raporty
+Dashboard
+Appointments
+Reports
 ```
 
-Inside `Wizyty`:
+Inside `Appointments`:
 
 ```text
-Wizyty | Zapisane psy
+Appointments | Saved Dogs
 ```
 
 Do not add Saved Dogs as a fourth primary mobile-navigation item unless the product requirements explicitly change.
@@ -57,8 +57,8 @@ Appointments are historical records.
 - Appointment-form population.
 - Appointment phone numbers are stored on the appointment as historical snapshots.
 - Breed suggestions with case-insensitive matching.
-- Polish phone formatting (`323 232 232`).
-- Saved Dog management inside `Wizyty`.
+- English-demo phone formatting (`123 456 789`).
+- Saved Dog management inside `Appointments`.
 - Responsive and accessible management UI.
 - Saved Dog RLS verified with separate users.
 - Cross-user appointment/Saved Dog read isolation verified.
@@ -73,12 +73,12 @@ Appointments are historical records.
 6. RLS remains authoritative for every appointment/Saved Dog mutation.
 7. Reuse existing services/hooks/types.
 8. Keep mobile as the primary experience.
-9. Keep user-facing UI text Polish.
+9. Keep user-facing UI text English.
 10. Do not add unnecessary architecture.
 
 ## Stage 09 scope decision
 
-Wizyty search/filtering is intentionally **out of the completed Stage 09 scope**.
+Appointments search/filtering is intentionally **out of the completed Stage 09 scope**.
 
 Do not implement the previously planned:
 
@@ -155,7 +155,7 @@ Shared appointment domain types belong in `src/types/appointment.ts`.
 
 All Stage 01–09 functionality is complete.
 
-Wizyty search/filtering remains intentionally out of scope.
+Appointments search/filtering remains intentionally out of scope.
 
 Next development should be defined as a new stage rather than silently
 expanding Stage 09.

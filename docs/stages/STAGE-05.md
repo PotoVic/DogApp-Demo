@@ -77,7 +77,7 @@ Do not recreate existing functionality unless there is a concrete reason.
 
 Do not implement:
 
-- Stage 06 UI/UX polish.
+- Stage 06 UI/UX refinement.
 - PWA.
 - PDF reports.
 - Customer management.
@@ -242,22 +242,22 @@ If today's date is used as the default, it should remain explicit and editable.
 
 Use the existing global semantic color variables.
 
-Primary UI language is Polish.
+Primary UI language is English.
 
 Suggested labels:
 
 ```text
-Pulpit
-Dzisiaj
-Dzisiejsze wizyty
-Dzisiejszy zarobek
-Ten miesiąc
-Liczba wizyt
-Kalendarz
-Dodaj wizytę
+Dashboard
+Today
+Today's appointments
+Today's earnings
+This month
+Appointment count
+Calendar
+Add appointment
 ```
 
-Use natural Polish wording consistent with the existing application.
+Use natural English wording consistent with the existing application.
 
 ---
 
@@ -274,9 +274,9 @@ Avoid an unnecessary full-screen loader if individual sections can load independ
 When there are no appointments today:
 
 ```text
-Brak wizyt na dziś.
+No appointments today.
 
-[ Dodaj wizytę ]
+[ Add appointment ]
 ```
 
 ## Error
@@ -284,8 +284,8 @@ Brak wizyt na dziś.
 Use a user-oriented message:
 
 ```text
-Nie udało się wczytać danych.
-Spróbuj ponownie.
+Failed to load data.
+Try again.
 ```
 
 Where practical, provide a retry action.
@@ -514,7 +514,7 @@ Stage 05 is complete only when:
 - [x] Loading states work.
 - [x] Empty states work.
 - [x] Error states work.
-- [x] Polish UI labels are appropriate.
+- [x] English UI labels are appropriate.
 - [x] Mobile layout works.
 - [x] Tablet layout works.
 - [x] Desktop layout works.
@@ -555,7 +555,7 @@ Do not mark Stage 05 complete merely because the dashboard renders. Functional v
 
 **Previous Stage:** Stage 04 — Calendar — Complete
 
-**Next Stage:** Stage 06 — UI/UX Polish
+**Next Stage:** Stage 06 — UI/UX Refinement
 
 
 ---
@@ -614,7 +614,7 @@ Stage 05 is officially complete.
 
 The next development stage is:
 
-**Stage 06 — UI/UX Polish**
+**Stage 06 — UI/UX Refinement**
 
 Stage 06 should build on the verified Dashboard, Calendar, and Appointment
 foundations without changing their underlying data architecture unless a

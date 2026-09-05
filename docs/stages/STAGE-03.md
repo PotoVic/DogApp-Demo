@@ -537,15 +537,15 @@ The form should:
 -   Provide clear Save and Cancel actions.
 -   Avoid unnecessary confirmation steps.
 
-Example Polish labels:
+Example English labels:
 
 ``` text
-Nazwa psa *
-Rasa
-Data *
-Godzina *
-Cena *
-Notatka
+Dog name *
+Breed
+Date *
+Time *
+Price *
+Note
 Status
 ```
 
@@ -600,7 +600,7 @@ The application should:
 -   Reject negative values.
 -   Convert the form value into the appropriate data representation
     before insertion.
--   Display the value as Polish currency when appropriate.
+-   Display the value as the demo currency (`kr`) when appropriate.
 
 Example:
 
@@ -612,7 +612,7 @@ Stored:
 150.00
 
 Displayed:
-150 zł
+150 kr
 ```
 
 Do not implement earnings calculations during Stage 03 beyond what is
@@ -635,7 +635,7 @@ The view should display useful information such as:
 13:30
 Luna
 Shih Tzu
-150 zł
+150 kr
 scheduled
 ```
 
@@ -757,7 +757,7 @@ confirmation step may be appropriate.
 For example:
 
 ``` text
-Czy na pewno chcesz usunąć tę wizytę?
+Are you sure you want to delete this appointment?
 ```
 
 The exact confirmation UX should follow the UI/UX principles.
@@ -778,7 +778,7 @@ At minimum:
 ### Loading appointments
 
 ``` text
-Ładowanie wizyt...
+Loading appointments...
 ```
 
 ### Saving
@@ -810,9 +810,9 @@ The appointment view should handle the case where no appointments exist.
 Example:
 
 ``` text
-Brak wizyt.
+No appointments.
 
-[ Dodaj wizytę ]
+[ Add appointment ]
 ```
 
 The empty state should explain what is happening and provide a useful
@@ -829,18 +829,18 @@ Appointment errors should be understandable to the user.
 Examples:
 
 ``` text
-Nie udało się pobrać wizyt.
-Spróbuj ponownie.
+Failed to load appointments.
+Try again.
 ```
 
 ``` text
-Nie udało się zapisać wizyty.
-Spróbuj ponownie.
+Failed to save the appointment.
+Try again.
 ```
 
 ``` text
-Nie udało się usunąć wizyty.
-Spróbuj ponownie.
+Failed to delete the appointment.
+Try again.
 ```
 
 Avoid exposing raw database or Supabase errors directly.
@@ -856,23 +856,23 @@ Important actions should provide clear feedback.
 Examples:
 
 ``` text
-Wizyta została zapisana.
+Appointment saved.
 ```
 
 ``` text
-Wizyta została zaktualizowana.
+Appointment updated.
 ```
 
 ``` text
-Wizyta została usunięta.
+Appointment deleted.
 ```
 
 ``` text
-Wizyta została oznaczona jako zakończona.
+Appointment marked as completed.
 ```
 
 ``` text
-Wizyta została anulowana.
+Appointment cancelled.
 ```
 
 Feedback should be noticeable but should not unnecessarily interrupt the

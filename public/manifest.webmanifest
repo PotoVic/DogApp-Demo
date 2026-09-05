@@ -1,8 +1,8 @@
 {
   "name": "DogCalendar",
   "short_name": "DogCalendar",
-  "description": "Prosty system zarządzania wizytami dla groomera.",
-  "lang": "pl",
+  "description": "A simple PWA for managing dog grooming appointments.",
+  "lang": "en",
   "dir": "ltr",
   "start_url": "/",
   "scope": "/",
@@ -13,12 +13,14 @@
     {
       "src": "/android-chrome-192x192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
     },
     {
       "src": "/android-chrome-512x512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
     }
   ]
 }

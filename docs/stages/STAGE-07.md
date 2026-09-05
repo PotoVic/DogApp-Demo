@@ -4,7 +4,7 @@
 
 **Complete and verified**
 
-**Previous Stage:** Stage 06 --- UI/UX Polish --- Complete
+**Previous Stage:** Stage 06 --- UI/UX Refinement --- Complete
 
 **Completed:** 2026-08-25
 
@@ -270,7 +270,7 @@ Implemented:
 -   `public/manifest.webmanifest`.
 -   `name: DogCalendar`.
 -   `short_name: DogCalendar`.
--   Polish language metadata.
+-   English language metadata.
 -   `start_url: /`.
 -   `scope: /`.
 -   `display: standalone`.
@@ -278,7 +278,7 @@ Implemented:
 -   Existing PWA icons.
 
 `index.html` was updated with manifest, theme, Apple touch icon,
-favicon, and Polish document-language metadata.
+favicon, and English document-language metadata.
 
 ## Step 3 --- PWA Icons
 
@@ -363,13 +363,13 @@ Application reloads into new version
 The prompt-based strategy avoids unexpected automatic reloads while
 users may be entering appointment information.
 
-A Polish-language update prompt was implemented using the PWA
+An English-language update prompt was implemented using the PWA
 registration API.
 
 Verified:
 
--   "Później" dismisses the prompt.
--   "Aktualizuj" activates the waiting worker and reloads the
+-   "Later" dismisses the prompt.
+-   "Update" activates the waiting worker and reloads the
     application.
 -   Authentication remains functional.
 -   Appointment behavior remains functional.
@@ -447,7 +447,7 @@ out of the PWA cache by default.
 The project uses prompt-based service-worker updates.
 
 The current application remains active while a new worker waits. The
-user can choose to activate the update through the Polish-language
+user can choose to activate the update through the English-language
 update prompt.
 
 Outdated static caches are cleaned up by Workbox.

@@ -33,12 +33,12 @@ Appointments remain the operational source of appointment history. Saved Dog edi
 The product keeps a small primary navigation:
 
 ```text
-Pulpit
-Wizyty
-Raporty
+Dashboard
+Appointments
+Reports
 ```
 
-Saved Dogs belong inside the existing Wizyty workflow rather than becoming a separate primary navigation item.
+Saved Dogs belong inside the existing Appointments workflow rather than becoming a separate primary navigation item.
 
 ## Maintainability direction
 
@@ -54,6 +54,6 @@ As the codebase grows:
 
 ## Scope discipline
 
-Search/filtering for historical Wizyty was considered but is not part of the completed Stage 09 scope. Future scope should be based on actual user needs rather than adding complexity preemptively.
+Search/filtering for historical Appointments was considered but is not part of the completed Stage 09 scope. Future scope should be based on actual user needs rather than adding complexity preemptively.
 
 **Last Updated:** 2026-09-04

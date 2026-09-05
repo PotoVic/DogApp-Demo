@@ -32,11 +32,11 @@ Reduce repetitive appointment entry for returning dogs while preserving appointm
 - [x] Capitalization does not create duplicate suggestions.
 - [x] New breeds can be introduced.
 
-### Wizyty / Saved Dogs UX
+### Appointments / Saved Dogs UX
 
-- [x] Existing `Wizyty` navigation item remains unchanged.
-- [x] Internal `Wizyty / Zapisane psy` switch implemented.
-- [x] `Dodaj wizytę` is positioned below the internal navigation.
+- [x] Existing `Appointments` navigation item remains unchanged.
+- [x] Internal `Appointments / Saved Dogs` switch implemented.
+- [x] `Add appointment` is positioned below the internal navigation.
 - [x] Saved Dogs have explanatory copy.
 - [x] Saved Dog CRUD UI is responsive.
 - [x] Saved Dog edit close control uses `close-icon.svg`.
@@ -47,7 +47,7 @@ Reduce repetitive appointment entry for returning dogs while preserving appointm
 
 - [x] Manual appointment entry remains available.
 - [x] Saved Dog selection populates name, breed, and phone where available.
-- [x] Appointment phone numbers remain available when editing the appointment and in `Wizyty`.
+- [x] Appointment phone numbers remain available when editing the appointment and in `Appointments`.
 - [x] Suggestion dropdown closes after selection.
 - [x] Existing appointment save flow remains the source of truth.
 
@@ -73,8 +73,8 @@ Reduce repetitive appointment entry for returning dogs while preserving appointm
 
 The following were originally planned but are **not required** for Stage 09 completion:
 
-- Dog-name search in Wizyty.
-- Breed search in Wizyty.
+- Dog-name search in Appointments.
+- Breed search in Appointments.
 - Year filter.
 - Month filter.
 - Status filter.
@@ -95,7 +95,7 @@ The following current workflows have been manually verified during Stage 09 deve
 - Saved Dog editing.
 - Saved Dog deletion.
 - Saved Dog reuse.
-- Internal Wizyty/Saved Dogs navigation.
+- Internal Appointments/Saved Dogs navigation.
 - Dashboard.
 - Calendar.
 - Reports/PDF.
