@@ -1,152 +1,175 @@
-# DogCalendar
+# 🐾 DogCalendar
 
-DogCalendar is a responsive appointment-management PWA for a dog groomer. The demo UI is in English and is designed around fast, simple daily appointment management.
+A responsive appointment-management **PWA** for a dog groomer — built with React, TypeScript, and Supabase.
 
-## Current status
+DogCalendar helps a dog groomer track daily appointments, reuse client/dog profiles, see earnings at a glance, and export monthly PDF reports — installable on a phone like a native app.
 
-- Stage 01 — Foundation: Complete
-- Stage 02 — Authentication & Authorization: Complete
-- Stage 03 — Appointments: Complete
-- Stage 04 — Calendar: Complete
-- Stage 05 — Dashboard: Complete
-- Stage 06 — UI/UX Refinement: Complete
-- Stage 07 — PWA: Complete
-- Stage 08 — Monthly PDF Reports: Complete
-- Stage 09 — Saved Dogs & Appointment History: **Complete**
 
-## Stage 09 result
+![Dashboard screenshot](./docs/screenshots/dashboard-desktop.png)
 
-Saved Dogs are now a reusable part of the appointment workflow.
 
-Implemented:
+<!-- ![Live demo](https://your-deployment-url.vercel.app) -->
 
-- Saved Dog CRUD.
-- `saved_dogs.id` as the Saved Dog identity.
-- `user_id` ownership.
-- Saved Dog selection from the appointment form.
-- Automatic reuse/creation without an extra confirmation step.
-- Name, breed, and optional phone number.
-- Demo phone formatting such as `123 456 789`.
-- Saved Dog management inside the existing `Appointments` area.
-- Internal `Appointments / Saved Dogs` navigation.
-- Responsive Saved Dogs UI.
-- Accessible Saved Dog edit/close controls.
-- Saved Dog edits may synchronize matching appointment information by deliberate product behavior.
-- Deleting a Saved Dog does not delete appointments.
-- Saved Dog RLS verified with multiple users.
-- Appointment and Saved Dog cross-user read isolation verified.
+---
 
-### Deliberate scope decision
+## ✨ Features
 
-Appointments search/filtering is **not part of the final Stage 09 scope**. Dog-name search, breed search, year/month/status filters, result counts, and mobile filter UI were evaluated as optional future work and removed from the Stage 09 definition of done.
+- **Dashboard** — today's earnings, this month's earnings, a mini calendar, and the day's appointments at a glance.
+- **Appointments** — create, edit, cancel, complete, or delete appointments, with a separate Upcoming/History view.
+- **Saved Dogs** — reusable client profiles (name, breed, phone number) with autocomplete when booking a new appointment, so repeat customers never have to be retyped from scratch.
+- **Smart syncing** — editing a Saved Dog's details can update matching upcoming appointments, and vice versa, while keeping historical appointment data intact.
+- **Monthly PDF reports** — generate a polished, paginated PDF of any month's appointments and earnings, entirely in the browser.
+- **Guest demo mode** — a one-click "Continue as Guest" login that spins up a temporary account pre-filled with realistic sample data, so anyone can try the app with nothing to sign up for.
+- **Installable PWA** — add it to your phone's home screen, with offline asset caching and an in-app update prompt.
+- **Per-user data isolation** — enforced at the database level with PostgreSQL Row Level Security, not just in the frontend.
 
-## Primary navigation
+---
 
-```text
-Dashboard
-Appointments
-Reports
-```
+## 🛠 Tech stack
 
-Mobile keeps three bottom-navigation items.
+| Layer | Technology |
+|---|---|
+| UI | React 19 + TypeScript |
+| Build tool | Vite |
+| Routing | React Router |
+| Backend | Supabase (PostgreSQL + Auth) |
+| Styling | Plain CSS (custom properties, BEM-style naming, mobile-first) |
+| PDF export | jsPDF |
+| PWA / offline | vite-plugin-pwa (Workbox) |
+| Testing | Vitest + React Testing Library |
+| Hosting | Vercel |
 
-Inside `Appointments`:
+---
+
+## 🏗 Architecture
+
+The app follows a simple, layered flow — every piece of data goes through the same path, whether it's read or written:
 
 ```text
-Appointments | Saved Dogs
+Pages            → one component per route (Dashboard, Appointments, Reports)
+  ↓
+Feature components → the actual UI for one feature (calendar grid, appointment list, forms)
+  ↓
+Hooks            → shared state + mutations (useAppointmentManager, useSavedDogs, useAuth)
+  ↓
+Services         → the only code that talks to Supabase
+  ↓
+Supabase client  → sends requests to the Supabase API
+  ↓
+PostgreSQL + RLS → the real authorization boundary
 ```
 
-Saved Dogs are intentionally not a fourth primary navigation item.
+**Authorization lives in the database, not the frontend.** Every table (`appointments`, `saved_dogs`) has Row Level Security policies that restrict every read/write to the authenticated user's own rows. Route guards and UI checks are there for good UX — they are not what keeps one user's data private from another's.
 
-## Technology
+For the full breakdown, see [`docs/ARCHITECTURE.md`](./docs/ARCHITECTURE.md), [`docs/DATABASE.md`](./docs/DATABASE.md), and [`docs/SECURITY.md`](./docs/SECURITY.md).
 
-- React
-- TypeScript
-- Vite
-- CSS
-- Supabase
-- PostgreSQL
-- Supabase Auth
-- PostgreSQL RLS
-- vite-plugin-pwa
-- jsPDF
+### Project structure
 
-## Core data rule
+```text
+src/
+├── components/     Shared, app-wide UI (auth guard, layout shell, modal, toast, PWA prompt)
+├── features/       UI that belongs to one feature area (appointments, dashboard, savedDogs)
+├── hooks/          Reusable state + behavior (useAuth, useAppointmentManager, useSavedDogs)
+├── pages/          One component per route (Login, AppHome, AppointmentsPage, Reports)
+├── services/       Functions that call Supabase (auth, appointments, savedDogs)
+├── types/          Shared TypeScript interfaces (Appointment, SavedDog)
+├── utils/          Pure functions (calendar math, currency formatting, PDF generation)
+└── styles/         Global CSS variables and resets
 
-Appointments remain the historical source of truth.
+docs/
+├── VISION.md         Product purpose and direction
+├── ARCHITECTURE.md   Technical shape of the codebase
+├── DATABASE.md        Schema, relationships, RLS requirements
+├── SECURITY.md        Security model and review history
+├── UI-UX.md           Navigation and interaction rules
+├── ROADMAP.md         Stage-by-stage plan and status
+├── AI-CONTEXT.md      Fast-loading project context
+└── stages/            One spec per development stage (01–09)
+```
 
-Saved Dogs are reusable current profile/contact information. Editing a Saved Dog may synchronize matching appointment information by design. Deleting a Saved Dog must never delete appointments.
+---
 
-## Security
 
-Supabase Auth identifies the user. PostgreSQL RLS authorizes access.
+## 📜 Available scripts
 
-The browser must never contain privileged Supabase credentials.
+| Command | What it does |
+|---|---|
+| `npm run dev` | Starts the local dev server with hot reload |
+| `npm run build` | Type-checks the project, then builds an optimized production bundle |
+| `npm run preview` | Serves the production build locally, for a final sanity check |
+| `npm run lint` | Runs ESLint |
+| `npm run test` | Runs the test suite in watch mode |
+| `npm run test:run` | Runs the test suite once (used in CI) |
 
-## Development
+---
 
-Run the project's normal commands, including:
+## ✅ Testing
+
+The project has a Vitest + React Testing Library suite covering the pure utility functions, the Supabase-backed services (with Supabase mocked), the shared hooks, and key components. Run it with:
 
 ```bash
-npm run lint
-npm run build
+npm run test:run
 ```
 
-where configured.
+Tests verify application logic in isolation — actual cross-user data isolation is verified separately, directly against the real database, since that's what Row Level Security policies are for. See [`tests/README.md`](./tests/README.md) for details.
 
-**Last Updated:** 2026-09-04
+---
 
+## 🔐 Security
 
-## Current code architecture
+- Every table is protected by PostgreSQL Row Level Security — a user can only ever read or write their own data, enforced by the database itself.
+- Only the public Supabase anon key ever ships to the browser; the service role key never appears in frontend code.
+- Deployment headers (`vercel.json`) set `X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`, and a restrictive `Permissions-Policy`.
+- No `dangerouslySetInnerHTML`, `eval()`, or custom auth/JWT handling anywhere in the codebase.
 
-The application source has been refactored to keep page components focused on
-composition and feature coordination.
+Full details and review history: [`docs/SECURITY.md`](./docs/SECURITY.md).
 
-The Dashboard is split into:
+---
 
-```text
-AppHome
-├── DashboardSummary
-├── DashboardMiniCalendar
-├── DashboardAppointments
-└── AppointmentModal
-       ↓
-useAppointmentManager
-       ↓
-appointmentService
-       ↓
-Supabase
-```
+## 📦 Deployment
 
-`useAppointmentManager` is the shared appointment state/mutation layer used by
-the Dashboard and the `Appointments` workspace.
+The app is set up to deploy on [Vercel](https://vercel.com/). `vercel.json` includes the SPA rewrite rule (so client-side routing survives a page refresh) and the security headers above. Remember to set `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` as environment variables in your Vercel project settings.
 
-Pure appointment calculations live in:
+---
 
-```text
-src/utils/appointmentCalculations.ts
-```
+## 📚 Documentation
 
-Shared display formatting lives in:
+| Doc | Covers |
+|---|---|
+| [`docs/VISION.md`](./docs/VISION.md) | Why this project exists, and what it should (and shouldn't) become |
+| [`docs/ARCHITECTURE.md`](./docs/ARCHITECTURE.md) | The layered architecture and folder structure |
+| [`docs/DATABASE.md`](./docs/DATABASE.md) | Schema, the Appointment ↔ Saved Dog relationship, RLS requirements |
+| [`docs/SECURITY.md`](./docs/SECURITY.md) | The security model and review history |
+| [`docs/UI-UX.md`](./docs/UI-UX.md) | Navigation and interaction decisions |
+| [`docs/ROADMAP.md`](./docs/ROADMAP.md) | Stage-by-stage plan and definition of done |
+| [`docs/AI-CONTEXT.md`](./docs/AI-CONTEXT.md) | Condensed project context and important rules |
+| [`docs/stages/`](./docs/stages/) | One detailed spec per development stage |
 
-```text
-src/utils/formatting.ts
-```
+---
 
-Shared domain types live in:
+## 🗺 Project status
 
-```text
-src/types/
-```
+| Stage | Status |
+|---|---|
+| 01 — Project Foundation | ✅ Complete |
+| 02 — Authentication & Authorization | ✅ Complete |
+| 03 — Appointments | ✅ Complete |
+| 04 — Calendar | ✅ Complete |
+| 05 — Dashboard | ✅ Complete |
+| 06 — UI/UX Refinement | ✅ Complete |
+| 07 — PWA | ✅ Complete |
+| 08 — Monthly PDF Reports | ✅ Complete |
+| 09 — Saved Dogs & Appointment History | ✅ Complete |
 
-The refactor was structural only: no new business feature, database model, or
-authorization model was introduced.
+**Deliberately out of scope:** appointment search/filtering (dog-name search, breed search, date/status filters) was evaluated during Stage 09 and consciously left out of the current scope rather than partially built.
 
-## Code documentation
+---
 
-The current source contains explanatory comments around non-obvious logic,
-component responsibilities, domain types, and important state/mutation
-behavior. Comments are intentionally focused on intent and responsibility
-rather than documenting every obvious line of JSX or CSS.
+## Author
 
-**Last Updated:** 2026-09-04
+**Wiktor Okonski**
+
+Frontend Developer
+
+* LinkedIn: [https://www.linkedin.com/in/wiktor-okonski-76778233/](https://www.linkedin.com/in/wiktor-okonski-76778233b/)
+* Portfolio: [wiktor-portfolio.vercel.app](https://wiktor-portfolio.vercel.app/)

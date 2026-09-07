@@ -7,13 +7,13 @@ describe("Toast", () => {
   afterEach(() => vi.useRealTimers());
 
   it("renders success as a status", () => {
-    render(<Toast message="Zapisano" onClose={vi.fn()} />);
-    expect(screen.getByRole("status")).toHaveTextContent("Zapisano");
+    render(<Toast message="Saved" onClose={vi.fn()} />);
+    expect(screen.getByRole("status")).toHaveTextContent("Saved");
   });
 
   it("renders errors as alerts", () => {
-    render(<Toast message="Błąd" variant="error" onClose={vi.fn()} />);
-    expect(screen.getByRole("alert")).toHaveTextContent("Błąd");
+    render(<Toast message="Error" variant="error" onClose={vi.fn()} />);
+    expect(screen.getByRole("alert")).toHaveTextContent("Error");
   });
 
   it("starts exiting after four seconds", async () => {
@@ -47,7 +47,7 @@ describe("Toast", () => {
     const { container } = render(<Toast message="Test" onClose={vi.fn()} />);
 
     await act(async () => {
-      fireEvent.click(screen.getByRole("button", { name: "Zamknij komunikat" }));
+      fireEvent.click(screen.getByRole("button", { name: "Close notification" }));
     });
 
     expect(container.firstElementChild?.className).toContain("toast--exiting");

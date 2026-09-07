@@ -68,7 +68,7 @@ describe("appointmentService", () => {
     fromMock.mockReturnValue(query);
 
     const input: any = {
-      dog_name: "Burek",
+      dog_name: "Max",
       breed: "Labrador",
       appointment_date: "2026-08-01",
       appointment_time: "10:00",
@@ -87,7 +87,7 @@ describe("appointmentService", () => {
     });
 
     await expect(createAppointment({
-      dog_name: "Burek",
+      dog_name: "Max",
       appointment_date: "2026-08-01",
       appointment_time: "10:00",
       price: 100,
@@ -99,12 +99,12 @@ describe("appointmentService", () => {
     getUserMock.mockResolvedValue({ data: { user: null }, error: null });
 
     await expect(createAppointment({
-      dog_name: "Burek",
+      dog_name: "Max",
       appointment_date: "2026-08-01",
       appointment_time: "10:00",
       price: 100,
       status: "scheduled",
-    } as any)).rejects.toThrow("Użytkownik nie jest zalogowany.");
+    } as any)).rejects.toThrow("User is not logged in.");
   });
 
   it("propagates create errors", async () => {
@@ -112,7 +112,7 @@ describe("appointmentService", () => {
     fromMock.mockReturnValue(chain({ data: null, error: new Error("insert failed") }));
 
     await expect(createAppointment({
-      dog_name: "Burek",
+      dog_name: "Max",
       appointment_date: "2026-08-01",
       appointment_time: "10:00",
       price: 100,

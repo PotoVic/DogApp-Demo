@@ -9,7 +9,7 @@ import {
 const appointment = (overrides: Partial<Appointment> = {}): Appointment => ({
   id: "1",
   user_id: "user-1",
-  dog_name: "Burek",
+  dog_name: "Max",
   breed: "Labrador",
   appointment_date: "2026-08-15",
   appointment_time: "10:00",

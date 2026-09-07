@@ -26,12 +26,12 @@ beforeEach(() => vi.clearAllMocks());
 
 describe("useSavedDogs", () => {
   it("loads dogs on mount", async () => {
-    mocks.getSavedDogs.mockResolvedValue([dog("1", "Burek")]);
+    mocks.getSavedDogs.mockResolvedValue([dog("1", "Max")]);
 
     const { result } = renderHook(() => useSavedDogs());
 
     await waitFor(() => expect(result.current.isLoading).toBe(false));
-    expect(result.current.savedDogs).toEqual([dog("1", "Burek")]);
+    expect(result.current.savedDogs).toEqual([dog("1", "Max")]);
     expect(result.current.error).toBeNull();
   });
 
@@ -46,20 +46,20 @@ describe("useSavedDogs", () => {
 
   it("adds and alphabetically sorts a dog", async () => {
     mocks.getSavedDogs.mockResolvedValue([dog("1", "Zosia")]);
-    mocks.createSavedDog.mockResolvedValue(dog("2", "Burek"));
+    mocks.createSavedDog.mockResolvedValue(dog("2", "Max"));
 
     const { result } = renderHook(() => useSavedDogs());
     await waitFor(() => expect(result.current.isLoading).toBe(false));
 
     await act(async () => {
-      await result.current.addSavedDog({ name: "Burek" });
+      await result.current.addSavedDog({ name: "Max" });
     });
 
-    expect(result.current.savedDogs.map((d) => d.name)).toEqual(["Burek", "Zosia"]);
+    expect(result.current.savedDogs.map((d) => d.name)).toEqual(["Max", "Zosia"]);
   });
 
   it("updates and re-sorts a dog", async () => {
-    mocks.getSavedDogs.mockResolvedValue([dog("1", "Burek"), dog("2", "Zosia")]);
+    mocks.getSavedDogs.mockResolvedValue([dog("1", "Max"), dog("2", "Zosia")]);
     mocks.updateSavedDog.mockResolvedValue(dog("1", "Ala"));
 
     const { result } = renderHook(() => useSavedDogs());
@@ -73,7 +73,7 @@ describe("useSavedDogs", () => {
   });
 
   it("removes a dog after successful deletion", async () => {
-    mocks.getSavedDogs.mockResolvedValue([dog("1", "Burek"), dog("2", "Zosia")]);
+    mocks.getSavedDogs.mockResolvedValue([dog("1", "Max"), dog("2", "Zosia")]);
     mocks.deleteSavedDog.mockResolvedValue(undefined);
 
     const { result } = renderHook(() => useSavedDogs());

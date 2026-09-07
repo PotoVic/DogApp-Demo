@@ -35,11 +35,11 @@ describe("AppointmentModal", () => {
   it("renders an error alert when provided", () => {
     render(
       <AppointmentModal
-        error="Wystąpił błąd"
+        error="An error occurred"
         onSubmit={vi.fn()}
         onClose={vi.fn()}
       />,
     );
-    expect(screen.getByRole("alert")).toHaveTextContent("Wystąpił błąd");
+    expect(screen.getByRole("alert")).toHaveTextContent("An error occurred");
   });
 });

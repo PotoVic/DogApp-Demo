@@ -17,7 +17,7 @@ import { useAppointmentManager } from "../src/hooks/useAppointmentManager";
 const appointment = (id = "1") => ({
   id,
   user_id: "user-1",
-  dog_name: "Burek",
+  dog_name: "Max",
   breed: null,
   appointment_date: "2026-08-01",
   appointment_time: "10:00",
@@ -29,7 +29,7 @@ const appointment = (id = "1") => ({
 });
 
 const input: any = {
-  dog_name: "Burek",
+  dog_name: "Max",
   appointment_date: "2026-08-01",
   appointment_time: "10:00",
   price: 100,
@@ -55,7 +55,7 @@ describe("useAppointmentManager", () => {
     const { result } = renderHook(() => useAppointmentManager());
 
     await waitFor(() => expect(result.current.isLoading).toBe(false));
-    expect(result.current.loadError).toBe("Nie udało się pobrać wizyt. Spróbuj ponownie.");
+    expect(result.current.loadError).toBe("Failed to load appointments. Try again.");
   });
 
   it("creates and reloads appointments", async () => {
@@ -69,7 +69,7 @@ describe("useAppointmentManager", () => {
     });
 
     expect(mocks.createAppointment).toHaveBeenCalledWith(input);
-    expect(result.current.successMessage).toBe("Wizyta została zapisana.");
+    expect(result.current.successMessage).toBe("Appointment saved.");
   });
 
   it("reports create failures", async () => {
@@ -82,7 +82,7 @@ describe("useAppointmentManager", () => {
       await expect(result.current.create(input)).resolves.toBe(false);
     });
 
-    expect(result.current.actionError).toBe("Nie udało się zapisać wizyty. Spróbuj ponownie.");
+    expect(result.current.actionError).toBe("Failed to save the appointment. Try again.");
   });
 
   it("updates an appointment", async () => {
@@ -96,7 +96,7 @@ describe("useAppointmentManager", () => {
     });
 
     expect(mocks.updateAppointment).toHaveBeenCalledWith("1", input);
-    expect(result.current.successMessage).toBe("Wizyta została zaktualizowana.");
+    expect(result.current.successMessage).toBe("Appointment updated.");
   });
 
   it("cancels an appointment", async () => {
@@ -110,7 +110,7 @@ describe("useAppointmentManager", () => {
     });
 
     expect(mocks.cancelAppointment).toHaveBeenCalledWith("1");
-    expect(result.current.successMessage).toBe("Wizyta została anulowana.");
+    expect(result.current.successMessage).toBe("Appointment cancelled.");
   });
 
   it("completes an appointment", async () => {
@@ -124,7 +124,7 @@ describe("useAppointmentManager", () => {
     });
 
     expect(mocks.completeAppointment).toHaveBeenCalledWith("1");
-    expect(result.current.successMessage).toBe("Wizyta została oznaczona jako zakończona.");
+    expect(result.current.successMessage).toBe("Appointment marked as completed.");
   });
 
   it("does not delete when confirmation is declined", async () => {
@@ -152,7 +152,7 @@ describe("useAppointmentManager", () => {
     });
 
     expect(mocks.deleteAppointment).toHaveBeenCalledWith("1");
-    expect(result.current.successMessage).toBe("Wizyta została usunięta.");
+    expect(result.current.successMessage).toBe("Appointment deleted.");
   });
 
   it("blocks a second mutation while one is active", async () => {

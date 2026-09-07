@@ -36,7 +36,7 @@ const chain = (result: unknown) => {
 const dog = (overrides: any = {}) => ({
   id: "dog-1",
   user_id: "user-1",
-  name: "Burek",
+  name: "Max",
   breed: "Labrador",
   phone_number: "123 456 789",
   created_at: "",
@@ -64,7 +64,7 @@ describe("savedDogService", () => {
 
   it("rejects when there is no authenticated user", async () => {
     getUserMock.mockResolvedValue({ data: { user: null }, error: null });
-    await expect(getSavedDogs()).rejects.toThrow("Użytkownik nie jest zalogowany.");
+    await expect(getSavedDogs()).rejects.toThrow("User is not logged in.");
   });
 
   it("propagates saved-dog query errors", async () => {
@@ -77,14 +77,14 @@ describe("savedDogService", () => {
     fromMock.mockReturnValue(query);
 
     await createSavedDog({
-      name: "  Burek  ",
+      name: "  Max  ",
       breed: "  Labrador  ",
       phone_number: " 123 456 789 ",
     });
 
     expect(query.insert).toHaveBeenCalledWith({
       user_id: "user-1",
-      name: "Burek",
+      name: "Max",
       breed: "Labrador",
       phone_number: "123 456 789",
     });
@@ -94,11 +94,11 @@ describe("savedDogService", () => {
     const query = chain({ data: dog(), error: null });
     fromMock.mockReturnValue(query);
 
-    await createSavedDog({ name: "Burek", breed: "   ", phone_number: "   " });
+    await createSavedDog({ name: "Max", breed: "   ", phone_number: "   " });
 
     expect(query.insert).toHaveBeenCalledWith({
       user_id: "user-1",
-      name: "Burek",
+      name: "Max",
       breed: null,
       phone_number: null,
     });
@@ -110,13 +110,13 @@ describe("savedDogService", () => {
 
     await updateSavedDog("dog-2", {
       name: "Rex",
-      breed: "Pudel",
+      breed: "Poodle",
       phone_number: "111 222 333",
     });
 
     expect(query.update).toHaveBeenCalledWith({
       name: "Rex",
-      breed: "Pudel",
+      breed: "Poodle",
       phone_number: "111 222 333",
     });
     expect(query.eq).toHaveBeenCalledWith("id", "dog-2");
@@ -152,7 +152,7 @@ describe("savedDogService", () => {
     const createQuery = chain({ data: dog({ id: "new" }), error: null });
     fromMock.mockReturnValueOnce(getQuery).mockReturnValueOnce(createQuery);
 
-    await findOrCreateSavedDog({ name: "Burek", breed: "Labrador" });
+    await findOrCreateSavedDog({ name: "Max", breed: "Labrador" });
 
     expect(createQuery.insert).toHaveBeenCalled();
   });
@@ -164,7 +164,7 @@ describe("savedDogService", () => {
     fromMock.mockReturnValueOnce(getQuery).mockReturnValueOnce(createQuery);
 
     await findOrCreateSavedDog({
-      name: "Burek",
+      name: "Max",
       breed: "Labrador",
       phone_number: "222 222 222",
     });
@@ -177,7 +177,7 @@ describe("savedDogService", () => {
     fromMock.mockReturnValue(chain({ data: [existing], error: null }));
 
     await expect(
-      findOrCreateSavedDog({ name: "Burek", breed: "Labrador" }),
+      findOrCreateSavedDog({ name: "Max", breed: "Labrador" }),
     ).resolves.toEqual(existing);
   });
 
@@ -192,7 +192,7 @@ describe("savedDogService", () => {
     fromMock.mockReturnValue(getQuery);
 
     await expect(
-      findOrCreateSavedDog({ name: "Burek", breed: "Labrador" }),
+      findOrCreateSavedDog({ name: "Max", breed: "Labrador" }),
     ).resolves.toBeNull();
   });
 });
