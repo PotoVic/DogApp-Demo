@@ -163,7 +163,7 @@ export function AppointmentList({
     },
     {
       value: "history",
-      label: "History",
+      label: "Completed",
       count: filterCounts.history,
     },
   ];
